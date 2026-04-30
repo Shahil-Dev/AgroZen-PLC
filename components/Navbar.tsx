@@ -164,7 +164,7 @@ export function Navbar() {
             <ul className="flex flex-col gap-4 text-white">
               <Link href="/" onClick={() => setMobileOpen(false)} className="text-2xl font-bold border-b border-white/10 pb-2">Home</Link>
               <div className="py-2">
-                <p className="text-[10px] uppercase tracking-widest text-white/40 mb-4">Resources</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/40 mb-4">Core Section</p>
                 <div className="grid gap-4">
                   {resourceLinks.map((link) => (
                     <Link key={link.name} href={link.href} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 text-lg opacity-80">
@@ -173,8 +173,8 @@ export function Navbar() {
                   ))}
                 </div>
               </div>
-              <Link href="/about" onClick={() => setMobileOpen(false)} className="text-2xl font-bold border-b border-white/10 pb-2 pt-4">About Us</Link>
-              <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-2xl font-bold">Contact</Link>
+              <Link href="/About" onClick={() => setMobileOpen(false)} className="text-2xl font-bold border-b border-white/10 pb-2 pt-4">About Us</Link>
+              <Link href="/Contact" onClick={() => setMobileOpen(false)} className="text-2xl font-bold">Contact</Link>
               
               {/* FIX 8: Added onClick to mobile language toggle */}
               <button 
