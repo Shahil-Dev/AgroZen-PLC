@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Leaf,
   ShieldCheck,
@@ -14,12 +14,18 @@ import {
 } from "lucide-react";
 
 // Professional Animation Variants
-const fadeInLazy = {
-  hidden: { opacity: 0, y: 30 },
+const fadeInLazy: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 30 
+  },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
+    transition: { 
+      duration: 0.8, 
+      ease: [0.22, 1, 0.36, 1] as any 
+    } 
   },
 };
 
@@ -31,12 +37,15 @@ const staggerContainer = {
   },
 };
 
-const cardSlideIn = {
+const cardSlideIn: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: { 
     opacity: 1, 
     scale: 1, 
-    transition: { duration: 0.5, ease: "easeOut" } 
+    transition: { 
+      duration: 0.5, 
+      ease: "easeOut" as any 
+    } 
   },
 };
 

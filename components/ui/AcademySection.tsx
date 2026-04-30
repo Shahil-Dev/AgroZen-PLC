@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   GraduationCap,
   BookOpen,
@@ -18,12 +18,18 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+const itemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.25, 1, 0.5, 1] },
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as any,
+    },
   },
 };
 
