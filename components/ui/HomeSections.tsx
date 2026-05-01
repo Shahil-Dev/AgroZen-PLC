@@ -68,12 +68,12 @@ export default function HomeSections() {
                 variants={fadeInLazy}
                 className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-[0.2em]"
               >
-                <Leaf size={14} className="animate-pulse" /> Precision Agriculture
+                <Leaf size={14} className="Space animate-pulse" /> Precision Agriculture
               </motion.div>
 
               <motion.h2
                 variants={fadeInLazy}
-                className="text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter"
+                className="text-5xl md:text-6xl plus font-black text-slate-900 leading-[1.1] tracking-tighter"
               >
                 Pioneering <span className="text-emerald-600">Bio-Tech</span> <br />
                 Efficiency
@@ -81,7 +81,7 @@ export default function HomeSections() {
 
               <motion.p
                 variants={fadeInLazy}
-                className="text-slate-500 text-lg md:text-xl leading-relaxed font-medium"
+                className="text-slate-500  text-lg md:text-xl leading-relaxed font-medium"
               >
                 At AgroZen Care PLC, we redefine traditional farming through high-tech ecosystems. From climate-controlled smart greenhouses to AI-driven soil management, we are engineering the future of food security.
               </motion.p>

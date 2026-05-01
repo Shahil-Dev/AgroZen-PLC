@@ -21,14 +21,15 @@ import {
 // FIX 1: Mock/Placeholder for translation logic (Replace with your actual import if available)
 const siteTranslations: any = {
   en: { nav: { home: "Home", contact: "Contact" } },
-  bn: { nav: { home: "হোম", contact: "যোগাযোগ" } }
+  bn: { nav: { home: "হোম", contact: "যোগাযোগ" } },
 };
 
 export function Navbar() {
   // FIX 2: Re-enabled language state and logic
   const [language, setLanguage] = useState<"en" | "bn">("en");
-  const toggleLanguage = () => setLanguage((prev) => (prev === "en" ? "bn" : "en"));
-  
+  const toggleLanguage = () =>
+    setLanguage((prev) => (prev === "en" ? "bn" : "en"));
+
   // FIX 3: Defined the 't' object so the UI doesn't crash
   const t = siteTranslations[language];
 
@@ -37,18 +38,33 @@ export function Navbar() {
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
   const resourceLinks = [
-    { name: "Agro & Farming", href: "/agro", icon: <Sprout size={18} /> },
+    {
+      name: "Agro & Farming",
+      href: "/Agro",
+      icon: <Sprout size={18} />,
+    },
     { name: "Eco-Retreat", href: "/tourism", icon: <Palmtree size={18} /> },
-    { name: "Senior Care & Hospital", href: "/care", icon: <HeartPulse size={18} /> },
-    { name: "Education", href: "/education", icon: <GraduationCap size={18} /> },
-    { name: "Investor Relations", href: "#investor", icon: <Users2 size={18} /> },
+    {
+      name: "Senior Care & Hospital",
+      href: "/care",
+      icon: <HeartPulse size={18} />,
+    },
+    {
+      name: "Education",
+      href: "/education",
+      icon: <GraduationCap size={18} />,
+    },
+    {
+      name: "Investor Relations",
+      href: "#investor",
+      icon: <Users2 size={18} />,
+    },
   ];
 
   return (
     <>
       <header className="fixed top-4 z-50 w-full px-6">
         <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-4 h-16 md:h-14 rounded-full border border-white/20 bg-black/10 backdrop-blur-md shadow-lg transition-all duration-300">
-          
           <Link
             href="/"
             className="flex items-center gap-2 group ml-2"
@@ -57,7 +73,7 @@ export function Navbar() {
             <div className="flex-shrink-0 h-10 w-10 md:h-10 md:w-10 rounded-full bg-white overflow-hidden border border-white/50 shadow-sm">
               <img
                 src="/image/Untitled design.png"
-                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300" 
+                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
                 alt="Logo"
               />
             </div>
@@ -76,7 +92,7 @@ export function Navbar() {
               >
                 {/* FIX 4: t.nav.home is now defined */}
                 {t.nav.home}
-              </Link> 
+              </Link>
             </li>
 
             <li
@@ -86,7 +102,10 @@ export function Navbar() {
             >
               <div className="flex plus items-center gap-1 text-[13px] lg:text-[14px] font-medium text-black group-hover:text-green-500 transition-all">
                 Core Section
-                <ChevronDown size={14} className={`transition-transform duration-200 ${isResourcesOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${isResourcesOpen ? "rotate-180" : ""}`}
+                />
               </div>
 
               <AnimatePresence>
@@ -104,7 +123,9 @@ export function Navbar() {
                         className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 text-white/80 hover:text-white transition-all"
                       >
                         <span className="text-white/60">{sub.icon}</span>
-                        <span className="text-[13px] font-semibold">{sub.name}</span>
+                        <span className="text-[13px] font-semibold">
+                          {sub.name}
+                        </span>
                       </Link>
                     ))}
                   </motion.div>
@@ -120,7 +141,7 @@ export function Navbar() {
                 About Us
               </Link>
             </li>
-            
+
             <li>
               <Link
                 href="/Contact"
@@ -162,26 +183,52 @@ export function Navbar() {
           >
             {/* FIX 7: Changed text-black to text-white for mobile menu visibility against dark background */}
             <ul className="flex flex-col gap-4 text-white">
-              <Link href="/" onClick={() => setMobileOpen(false)} className="text-2xl font-bold border-b border-white/10 pb-2">Home</Link>
+              <Link
+                href="/"
+                onClick={() => setMobileOpen(false)}
+                className="text-2xl font-bold border-b border-white/10 pb-2"
+              >
+                Home
+              </Link>
               <div className="py-2">
-                <p className="text-[10px] uppercase tracking-widest text-white/40 mb-4">Core Section</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/40 mb-4">
+                  Core Section
+                </p>
                 <div className="grid gap-4">
                   {resourceLinks.map((link) => (
-                    <Link key={link.name} href={link.href} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 text-lg opacity-80">
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 text-lg opacity-80"
+                    >
                       {link.icon} {link.name}
                     </Link>
                   ))}
                 </div>
               </div>
-              <Link href="/About" onClick={() => setMobileOpen(false)} className="text-2xl font-bold border-b border-white/10 pb-2 pt-4">About Us</Link>
-              <Link href="/Contact" onClick={() => setMobileOpen(false)} className="text-2xl font-bold">Contact</Link>
-              
+              <Link
+                href="/About"
+                onClick={() => setMobileOpen(false)}
+                className="text-2xl font-bold border-b border-white/10 pb-2 pt-4"
+              >
+                About Us
+              </Link>
+              <Link
+                href="/Contact"
+                onClick={() => setMobileOpen(false)}
+                className="text-2xl font-bold"
+              >
+                Contact
+              </Link>
+
               {/* FIX 8: Added onClick to mobile language toggle */}
-              <button 
+              <button
                 onClick={toggleLanguage}
                 className="mt-8 flex items-center justify-center gap-2 py-4 rounded-2xl bg-white text-[#1a3d1f] font-black uppercase text-sm tracking-widest"
               >
-                <Languages size={18} /> {language === "bn" ? "English" : "বাংলা"}
+                <Languages size={18} />{" "}
+                {language === "bn" ? "English" : "বাংলা"}
               </button>
             </ul>
           </motion.div>
@@ -190,8 +237,3 @@ export function Navbar() {
     </>
   );
 }
-
-
-
-
-
