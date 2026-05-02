@@ -56,7 +56,7 @@ export function Navbar() {
     },
     {
       name: "Investor Relations",
-      href: "#investor",
+      href: "/investor",
       icon: <Users2 size={18} />,
     },
   ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Heart,
   Stethoscope,
@@ -14,12 +14,15 @@ import {
   BriefcaseMedical,
 } from "lucide-react";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
   },
 };
 
@@ -30,7 +33,6 @@ const stagger = {
 export default function SeniorCarePage() {
   return (
     <main className="min-h-screen z-10 pt-4  bg-[#DBE1DA] text-[#1a1a1a] selection:bg-emerald-200">
-      
       {/* --- 1. HERO: COMPASSIONATE INNOVATION --- */}
       <section className="relative h-[90vh] flex items-center justify-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -76,7 +78,6 @@ export default function SeniorCarePage() {
       <section className="py-32 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
-            
             {/* Left Content */}
             <div className="space-y-12 relative z-10">
               <div className="space-y-4">

@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+// গ্লোবাল অ্যানিমেশন ইমপোর্ট করুন
+import { fadeInUp, staggerContainer } from '@/lib/utils'; 
 import {
   Trees,
   Waves,
@@ -13,15 +15,6 @@ import {
   Camera,
   Coffee,
 } from "lucide-react";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 export default function EcoRetreatPage() {
   return (
@@ -41,6 +34,7 @@ export default function EcoRetreatPage() {
         <motion.div
           initial="hidden"
           animate="visible"
+          variants={staggerContainer} // স্ট্যাগার কন্টেইনার যুক্ত করা হয়েছে
           className="relative z-10 text-center space-y-8"
         >
           <motion.div variants={fadeInUp} className="flex justify-center">
@@ -66,44 +60,47 @@ export default function EcoRetreatPage() {
         </motion.div>
       </section>
 
-      {/* --- 2. PHILOSOPHY: THE ORGANIC LIFE --- */}
+      {/* --- 2. PHILOSOPHY --- */}
       <section className="py-32 px-6">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
-          <div className="space-y-12 relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="space-y-12 relative z-10"
+          >
             <div className="space-y-6">
-              <span className="text-emerald-800 font-black uppercase tracking-[0.4em] text-[10px]">
+              <motion.span variants={fadeInUp} className="text-emerald-800 font-black uppercase tracking-[0.4em] text-[10px]">
                 Agritourism Reimagined
-              </span>
-              <h2 className="text-5xl md:text-7xl font-black leading-none tracking-tighter">
+              </motion.span>
+              <motion.h2 variants={fadeInUp} className="text-5xl md:text-7xl font-black leading-none tracking-tighter">
                 Breathable <br /> Architecture.
-              </h2>
-              <p className="text-[#1a1a1a]/60 text-lg font-medium leading-relaxed">
+              </motion.h2>
+              <motion.p variants={fadeInUp} className="text-[#1a1a1a]/60 text-lg font-medium leading-relaxed">
                 Our retreats are built using biodegradable and local materials,
                 ensuring zero impact on the ecosystem while providing five-star
-                comfort. Every cottage overlooks our active organic farms.
-              </p>
+                comfort.
+              </motion.p>
             </div>
 
-            <div className="grid grid-cols-2 gap-8">
+            <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-8">
               <div className="space-y-2">
                 <p className="text-3xl font-black tracking-tighter">100%</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/50">
-                  Solar Powered
-                </p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/50">Solar Powered</p>
               </div>
               <div className="space-y-2">
                 <p className="text-3xl font-black tracking-tighter">Organic</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/50">
-                  Farm-to-Table
-                </p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1a1a1a]/50">Farm-to-Table</p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            transition={{ duration: 1 }}
             className="relative aspect-square rounded-[4rem] overflow-hidden shadow-2xl bg-emerald-900/10"
           >
             <img
@@ -120,119 +117,94 @@ export default function EcoRetreatPage() {
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="flex flex-col md:flex-row justify-between items-end gap-8">
             <div className="space-y-6">
-              <span className="text-emerald-500 font-black uppercase tracking-[0.5em] text-[10px]">
-                Curation
-              </span>
-              <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none uppercase">
-                The Retreat <br /> Experience.
-              </h2>
+              <span className="text-emerald-500 font-black uppercase tracking-[0.5em] text-[10px]">Curation</span>
+              <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none uppercase">The Retreat <br /> Experience.</h2>
             </div>
-            <p className="max-w-xs text-slate-400 font-medium pb-4">
-              Thoughtfully curated activities to heal the mind and nourish the
-              soul.
-            </p>
+            <p className="max-w-xs text-slate-400 font-medium pb-4">Thoughtfully curated activities to heal the mind.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-1 bg-white/10 border border-white/10 rounded-[3rem] overflow-hidden">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-1 bg-white/10 border border-white/10 rounded-[3rem] overflow-hidden"
+          >
             {[
-              {
-                icon: Utensils,
-                title: "Farm-to-Table",
-                desc: "Harvest your own vegetables and enjoy a chef-prepared organic meal.",
-              },
-              {
-                icon: Moon,
-                title: "Star Gazing",
-                desc: "Zero light pollution allows for breathtaking views of the night sky.",
-              },
-              {
-                icon: Wind,
-                title: "Meditation Deck",
-                desc: "Guided sessions by the river to align your inner energy.",
-              },
-              {
-                icon: Camera,
-                title: "Nature Trails",
-                desc: "Explore the biodiversity of our protected forest zones.",
-              },
-              {
-                icon: Coffee,
-                title: "Artisan Coffee",
-                desc: "Sip our home-grown organic blends at the sunrise lounge.",
-              },
-              {
-                icon: Waves,
-                title: "Natural Pool",
-                desc: "Chemical-free swimming experience in our spring-fed pool.",
-              },
+              { icon: Utensils, title: "Farm-to-Table", desc: "Harvest your own vegetables and enjoy a chef-prepared meal." },
+              { icon: Moon, title: "Star Gazing", desc: "Zero light pollution allows for breathtaking views." },
+              { icon: Wind, title: "Meditation Deck", desc: "Guided sessions by the river to align your energy." },
+              { icon: Camera, title: "Nature Trails", desc: "Explore the biodiversity of our protected zones." },
+              { icon: Coffee, title: "Artisan Coffee", desc: "Sip our home-grown organic blends at sunrise." },
+              { icon: Waves, title: "Natural Pool", desc: "Chemical-free swimming in our spring-fed pool." },
             ].map((item, i) => (
-              <div
+              <motion.div
                 key={i}
+                variants={fadeInUp}
                 className="p-12 space-y-6 hover:bg-white/5 transition-colors group"
               >
-                <item.icon
-                  className="text-emerald-500 group-hover:scale-110 transition-transform"
-                  size={32}
-                />
-                <h4 className="text-2xl font-black tracking-tighter uppercase">
-                  {item.title}
-                </h4>
-                <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+                <item.icon className="text-emerald-500 group-hover:scale-110 transition-transform" size={32} />
+                <h4 className="text-2xl font-black tracking-tighter uppercase">{item.title}</h4>
+                <p className="text-sm text-slate-400 font-medium leading-relaxed">{item.desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* --- 4. GALLERY --- */}
-      {/* --- 4. GALLERY (Updated IDs) --- */}
       <section className="py-32 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
           {[
-            "photo-1506744038136-46273834b3fb", // 1
-            "photo-1464822759023-fed622ff2c3b", // 2
-            "photo-1441974231531-c6227db76b6e", // 3
-            "photo-1502672260266-1c1ef2d93688", // 4: Luxury Interior/Wooden Cabin
-            "photo-1510798831971-661eb04b3739", // 5: Peaceful Winter/Foggy Forest
-            "photo-1500627768332-4e9420999052", // 6
-            "photo-1540553016722-983e48a2cd10", // 7: Spa/Wellness focus
-            "photo-1518173946687-a4c8a9b73686", // 8
+            "photo-1506744038136-46273834b3fb", "photo-1464822759023-fed622ff2c3b", 
+            "photo-1441974231531-c6227db76b6e", "photo-1502672260266-1c1ef2d93688",
+            "photo-1510798831971-661eb04b3739", "photo-1500627768332-4e9420999052", 
+            "photo-1540553016722-983e48a2cd10", "photo-1518173946687-a4c8a9b73686"
           ].map((id, index) => (
-            <div key={index} className={index % 2 === 1 ? "pt-12" : ""}>
+            <motion.div 
+              key={index} 
+              variants={fadeInUp}
+              className={index % 2 === 1 ? "pt-12" : ""}
+            >
               <img
                 src={`https://images.unsplash.com/${id}?auto=format&fit=crop&q=60&w=800`}
                 className={`rounded-3xl w-full object-cover shadow-lg bg-emerald-900/5 ${index % 2 === 0 ? "h-80" : "h-40"}`}
                 alt={`Gallery ${index}`}
                 loading="lazy"
               />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* --- 5. CTA --- */}
       <section className="py-40 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           <motion.h2
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial="hidden"
+            whileInView="visible"
+            variants={fadeInUp}
             className="text-5xl md:text-8xl font-black tracking-tighter uppercase"
           >
             DISCOVER <br /> YOUR WILD.
           </motion.h2>
-          <p className="text-lg font-medium text-[#1a1a1a]/60">
+          <motion.p initial="hidden" whileInView="visible" variants={fadeInUp} className="text-lg font-medium text-[#1a1a1a]/60">
             Bookings for Summer 2026 are now open for AgroZen Elite members.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center pt-8">
+          </motion.p>
+          <motion.div initial="hidden" whileInView="visible" variants={fadeInUp} className="flex flex-col md:flex-row gap-4 justify-center pt-8">
             <button className="px-12 py-6 bg-emerald-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl shadow-2xl hover:scale-105 transition-all">
               Reserve Your Sanctuary
             </button>
             <button className="px-12 py-6 border border-emerald-900/20 text-emerald-900 font-black uppercase tracking-widest text-[10px] rounded-2xl hover:bg-emerald-900 hover:text-white transition-all">
               View All Locations
             </button>
-          </div>
+          </motion.div>
         </div>
       </section>
     </main>

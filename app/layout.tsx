@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/Navbar";
+import Footer from "@/components/ui/Footer";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
@@ -37,6 +38,7 @@ export default function RootLayout({
           {children}
         </div>
         </body>
+        <Footer></Footer>
     </html>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
+import { fadeInUp } from "@/lib/utils";
 import { motion } from "framer-motion";
+
 import {
   BookOpen,
   GraduationCap,
@@ -11,28 +13,27 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
-
 export default function EducationPage() {
   return (
     <main className="min-h-screen bg-[#FDFCFB] text-[#1a1a1a]">
       {/* --- 1. HERO SECTION --- */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div initial="hidden" animate="visible" className="space-y-8">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
+            className="space-y-8"
+          >
             <motion.span
               variants={fadeInUp}
-              className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-widest"
+              className="inline-block px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-widest"
             >
               AgroZen Academy
             </motion.span>
+
             <motion.h1
               variants={fadeInUp}
               className="text-6xl md:text-8xl font-black tracking-tighter leading-none"
@@ -40,6 +41,7 @@ export default function EducationPage() {
               ROOTED IN <br />{" "}
               <span className="text-emerald-600">KNOWLEDGE.</span>
             </motion.h1>
+
             <motion.p
               variants={fadeInUp}
               className="max-w-md text-lg text-slate-600 leading-relaxed"
@@ -48,6 +50,7 @@ export default function EducationPage() {
               healthcare professionals through hands-on learning and sustainable
               practices.
             </motion.p>
+
             <motion.div variants={fadeInUp} className="flex gap-4">
               <button className="px-8 py-4 bg-[#1a1a1a] text-white rounded-full font-bold text-xs uppercase tracking-widest hover:bg-emerald-600 transition-colors">
                 Explore Programs
@@ -62,13 +65,12 @@ export default function EducationPage() {
             className="relative"
           >
             <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&auto=format"
-                alt="AgroZen Education"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "https://via.placeholder.com/1200x800?text=AgroZen+Education+Coming+Soon";
-                }}
+              <motion.img
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1.1 }}
+                transition={{ duration: 1.5 }}
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop"
+                alt="Modern Education"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -107,6 +109,10 @@ export default function EducationPage() {
               <motion.div
                 key={i}
                 whileHover={{ y: -10 }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
                 className="p-10 bg-white rounded-[2.5rem] shadow-sm border border-slate-100 space-y-6"
               >
                 <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
@@ -129,7 +135,13 @@ export default function EducationPage() {
 
       {/* --- 3. IMPACT SECTION --- */}
       <section className="py-32 px-6">
-        <div className="max-w-6xl mx-auto rounded-[4rem] bg-emerald-900 overflow-hidden relative">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="max-w-6xl mx-auto rounded-[4rem] bg-emerald-900 overflow-hidden relative"
+        >
           <img
             src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
             className="absolute inset-0 w-full h-full object-cover opacity-20"
@@ -159,7 +171,7 @@ export default function EducationPage() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* --- 4. COURSE GRID --- */}
@@ -189,7 +201,14 @@ export default function EducationPage() {
                 duration: "1 Year",
               },
             ].map((course, i) => (
-              <div key={i} className="group cursor-pointer">
+              <motion.div
+                key={i}
+                className="group cursor-pointer"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
                 <div className="relative aspect-video rounded-[2rem] overflow-hidden mb-6">
                   <img
                     src={course.image}
@@ -203,7 +222,7 @@ export default function EducationPage() {
                 <h4 className="text-3xl font-black tracking-tight group-hover:text-emerald-600 transition-colors">
                   {course.title}
                 </h4>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
