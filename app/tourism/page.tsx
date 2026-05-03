@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-// গ্লোবাল অ্যানিমেশন ইমপোর্ট করুন
 import { fadeInUp, staggerContainer } from '@/lib/utils'; 
 import {
   Trees,
