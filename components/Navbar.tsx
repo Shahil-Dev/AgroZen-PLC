@@ -72,7 +72,7 @@ export function Navbar() {
           >
             <div className="flex-shrink-0 h-10 w-10 md:h-10 md:w-10 rounded-full bg-white overflow-hidden border border-white/50 shadow-sm">
               <img
-                src="/image/Untitled design.png"
+                src="image/high png agro.png"
                 className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
                 alt="Logo"
               />

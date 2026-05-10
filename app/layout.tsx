@@ -37,8 +37,8 @@ export default function RootLayout({
         <div className="bg-[#DBE1DA] ">
           {children}
         </div>
-        </body>
         <Footer></Footer>
+        </body>
     </html>
   );
 }
