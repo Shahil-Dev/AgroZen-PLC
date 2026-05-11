@@ -1,5 +1,6 @@
 "use client";
-import { motion, Variants } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   Leaf,
   ShieldCheck,
@@ -8,234 +9,307 @@ import {
   BarChart4,
   Scale,
   Building2,
-  Briefcase,
   ArrowUpRight,
   TrendingUp,
+  Fingerprint,
+  Eye,
+  Info,
+  X,
+  Zap,
 } from "lucide-react";
 
-// Professional Animation Variants
-const fadeInLazy: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: 30 
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.8, 
-      ease: [0.22, 1, 0.36, 1] as any 
-    } 
-  },
-};
-
-const staggerContainer = {
+// --- Sophisticated Animation Variants ---
+const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
   },
 };
 
-const cardSlideIn: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { 
-    opacity: 1, 
-    scale: 1, 
-    transition: { 
-      duration: 0.5, 
-      ease: "easeOut" as any 
-    } 
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
-export default function HomeSections() {
+export default function AgroZenEvolution() {
+  const [showInsights, setShowInsights] = useState(false);
+
   return (
-    <div className="space-y-32 py-24 bg-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
-        
-        {/* SECTION 1: STRATEGIC EXCELLENCE */}
-        <section className="relative">
-          <div className="flex flex-col lg:flex-row items-center gap-20">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="lg:w-1/2 space-y-8"
-            >
-              <motion.div
-                variants={fadeInLazy}
-                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-[0.2em]"
-              >
-                <Leaf size={14} className="Space animate-pulse" /> Precision Agriculture
-              </motion.div>
+    <div className="min-h-screen bg-[#0D1A16] text-stone-200 selection:bg-emerald-500/30 font-sans">
+      {/* Ambient Background Blur */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-emerald-900/20 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[30%] h-[50%] bg-emerald-800/10 blur-[100px] rounded-full" />
+      </div>
 
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32 space-y-64">
+        {/* SECTION 1: THE HUMAN-TECH SYNERGY */}
+        <section>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid lg:grid-cols-12 gap-16 items-start"
+          >
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-12">
               <motion.h2
-                variants={fadeInLazy}
-                className="text-5xl md:text-6xl plus font-black text-slate-900 leading-[1.1] tracking-tighter"
+                variants={itemVariants}
+                className="text-6xl md:text-8xl font-light tracking-tighter leading-[0.9] text-white"
               >
-                Pioneering <span className="text-emerald-600">Bio-Tech</span> <br />
-                Efficiency
+                The Spirit of <br />
+                <span className="italic font-serif text-emerald-400">
+                  Pure Growth
+                </span>
               </motion.h2>
 
               <motion.p
-                variants={fadeInLazy}
-                className="text-slate-500  text-lg md:text-xl leading-relaxed font-medium"
+                variants={itemVariants}
+                className="text-stone-400 text-xl font-light leading-relaxed max-w-2xl"
               >
-                At AgroZen Care PLC, we redefine traditional farming through high-tech ecosystems. From climate-controlled smart greenhouses to AI-driven soil management, we are engineering the future of food security.
+                At AgroZen Care PLC, we believe the future of food is personal.
+                We bridge the gap between biological heritage and digital
+                precision, creating a human-centric ecosystem where nature and
+                technology breathe as one.
               </motion.p>
 
               <motion.div
-                variants={staggerContainer}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-slate-100"
+                variants={itemVariants}
+                className="grid sm:grid-cols-2 gap-12"
               >
-                <motion.div variants={fadeInLazy} className="group cursor-default">
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp size={18} className="text-emerald-500" />
-                    <h4 className="font-bold text-slate-800 text-lg uppercase tracking-tight">Data-Driven Yield</h4>
+                <div className="group space-y-4">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-[13px] bg-white/5 border border-white/10 group-hover:border-emerald-500/50 transition-all">
+                    <Fingerprint
+                      className="text-emerald-400"
+                      size={24}
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">
-                    Maximizing production through nutrient precision and automated monitoring.
+                  <h4 className="text-white font-medium text-xl tracking-tight">
+                    Ethical DNA
+                  </h4>
+                  <p className="text-sm text-stone-500 leading-relaxed">
+                    Our processes are coded with integrity, ensuring every grain
+                    produced is a testament to quality.
                   </p>
-                </motion.div>
-                <motion.div variants={fadeInLazy} className="group cursor-default">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Globe2 size={18} className="text-emerald-500" />
-                    <h4 className="font-bold text-slate-800 text-lg uppercase tracking-tight">Export Grade</h4>
+                </div>
+                <div className="group space-y-4">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-[13px] bg-white/5 border border-white/10 group-hover:border-emerald-500/50 transition-all">
+                    <Eye
+                      className="text-emerald-400"
+                      size={24}
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">
-                    Meeting global compliance standards for premium international markets.
+                  <h4 className="text-white font-medium text-xl tracking-tight">
+                    Living Insight
+                  </h4>
+                  <p className="text-sm text-stone-500 leading-relaxed">
+                    We don't just farm; we observe. Real-time data ensures our
+                    crops receive exactly what they need.
                   </p>
-                </motion.div>
+                </div>
               </motion.div>
-            </motion.div>
+            </div>
 
-            {/* Interactive Grid Cards */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="lg:w-1/2 grid grid-cols-2 gap-4 md:gap-6"
-            >
+            {/* Right Bento Grid - Now with glass effect */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-4 pt-12">
               {[
-                { icon: Globe2, label: "Global Reach", color: "text-blue-600 bg-blue-50" },
-                { icon: ShieldCheck, label: "PLC Integrity", color: "text-emerald-600 bg-emerald-50" },
-                { icon: Medal, label: "Elite Quality", color: "text-amber-600 bg-amber-50" },
-                { icon: BarChart4, label: "Bio-Analytics", color: "text-purple-600 bg-purple-50" },
-              ].map((card, i) => (
+                { icon: Globe2, label: "Global Reach", sub: "Eco standards" },
+                {
+                  icon: ShieldCheck,
+                  label: "Bio-Safety",
+                  sub: "Certified purity",
+                },
+                { icon: TrendingUp, label: "Efficiency", sub: "Yield+ Logic" },
+                {
+                  icon: BarChart4,
+                  label: "Intelligence",
+                  sub: "AI Monitoring",
+                },
+              ].map((item, idx) => (
                 <motion.div
-                  key={i}
-                  variants={cardSlideIn}
-                  whileHover={{ y: -8, boxShadow: "0 30px 60px -12px rgba(0,0,0,0.1)" }}
-                  className="p-10 rounded-[2.5rem] border border-slate-100 bg-slate-50/30 flex flex-col items-center justify-center text-center transition-all duration-500 group"
+                  key={idx}
+                  variants={itemVariants}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="p-8 rounded-[15px] border border-white/5 bg-white/[0.03] backdrop-blur-3xl transition-all duration-500 hover:border-emerald-500/30"
                 >
-                  <div className={`p-5 rounded-2xl ${card.color} mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
-                    <card.icon size={28} strokeWidth={1.5} />
+                  <div className="p-3 bg-emerald-500/10 w-fit rounded-[15px] mb-6">
+                    <item.icon className="text-emerald-400" size={22} />
                   </div>
-                  <span className="font-black text-slate-800 uppercase tracking-widest text-[11px] md:text-xs leading-none">
-                    {card.label}
-                  </span>
+                  <p className="text-white font-medium tracking-tight text-lg leading-none">
+                    {item.label}
+                  </p>
+                  <p className="text-[10px] text-stone-500 uppercase tracking-widest mt-3">
+                    {item.sub}
+                  </p>
                 </motion.div>
               ))}
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </section>
 
-        {/* SECTION 2: INSTITUTIONAL STRENGTH */}
-        <section className="mt-32">
+        {/* SECTION 2: INSTITUTIONAL STRENGTH - LIGHTER CONTRAST */}
+        <section>
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="rounded-[3rem] bg-slate-950 p-8 md:p-20 text-white relative overflow-hidden shadow-2xl"
+            transition={{ duration: 1.2 }}
+            className="relative rounded-[15px] bg-stone-50 p-8 md:p-20 overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] text-stone-900"
           >
-            {/* Mesh Gradient Background */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_50%_-20%,#10b981,transparent)]" />
-            <motion.div
-              animate={{ opacity: [0.05, 0.1, 0.05] }}
-              transition={{ duration: 5, repeat: Infinity }}
-              className="absolute inset-0 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"
-            />
+            {/* Soft decorative background */}
+            <div className="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-emerald-500/5 to-transparent pointer-events-none" />
 
-            <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerContainer}
-                className="space-y-8"
-              >
-                <motion.h2
-                  variants={fadeInLazy}
-                  className="text-4xl md:text-6xl font-black italic tracking-tighter leading-none"
-                >
-                  Built on <span className="text-emerald-400">Institutional</span> <br />
-                  Excellence
-                </motion.h2>
-
-                <motion.p
-                  variants={fadeInLazy}
-                  className="text-slate-400 text-lg leading-relaxed max-w-md"
-                >
-                  As a Public Company Limited by Shares, AgroZen Care PLC operates with complete transparency and financial stability, fostering trust for stakeholders nationwide.
-                </motion.p>
-
-                <motion.div variants={fadeInLazy} className="flex flex-wrap gap-4">
-                  {[
-                    { icon: Scale, text: "Legal Compliance" },
-                    { icon: Building2, text: "Incorporated in BD" },
-                  ].map((badge, b) => (
-                    <div key={b} className="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3 backdrop-blur-sm">
-                      <badge.icon size={18} className="text-emerald-400" />
-                      <span className="text-xs font-black uppercase tracking-widest leading-none">{badge.text}</span>
-                    </div>
-                  ))}
-                </motion.div>
-              </motion.div>
-
-              {/* Financial Status Card */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-12 border border-white/10 space-y-10 relative group"
-              >
-                <div className="absolute top-8 right-8 text-emerald-400 opacity-20 group-hover:opacity-100 transition-opacity">
-                  <ArrowUpRight size={40} />
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-emerald-400 text-[10px] md:text-xs font-black uppercase tracking-[0.3em]">
-                    Authorized Capital
-                  </p>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-4xl md:text-6xl font-black">80.0M</p>
-                    <span className="text-lg md:text-2xl font-light text-slate-500 uppercase tracking-widest">BDT</span>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-                <div className="flex justify-between items-center">
-                  <div className="space-y-1">
-                    <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Total Shares</p>
-                    <p className="text-3xl font-bold tracking-tighter text-white">8,000,000</p>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <div className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-1 border border-emerald-500/20">
-                      Ordinary
-                    </div>
-                    <p className="text-slate-500 text-[9px] uppercase font-medium">Class A Shares</p>
-                  </div>
-                </div>
-
-                <p className="text-slate-500 text-[10px] italic text-center font-medium opacity-60">
-                  Regulated by the Companies Act, 1994 (Act XVIII of 1994)
+            <div className="relative z-10 grid lg:grid-cols-12 gap-16 items-center">
+              <div className="lg:col-span-6 space-y-8">
+                <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none text-stone-800">
+                  Built on <br />
+                  <span className="font-serif italic text-emerald-600">
+                    Institutional
+                  </span>{" "}
+                  Trust
+                </h2>
+                <p className="text-stone-500 text-lg max-w-md font-light leading-relaxed">
+                  As a Public Company Limited, our foundation is transparency.
+                  We operate under rigid standards to ensure long-term stability
+                  and value for our stakeholders.
                 </p>
-              </motion.div>
+
+                {/* TOGGLE TRIGGER */}
+                <button
+                  onClick={() => setShowInsights(!showInsights)}
+                  className="flex items-center gap-4 group transition-all"
+                >
+                  <div
+                    className={`p-4 rounded-full transition-all duration-500 ${showInsights ? "bg-stone-800 text-white" : "bg-emerald-600 text-white shadow-lg shadow-emerald-600/30"}`}
+                  >
+                    {showInsights ? <X size={20} /> : <Info size={20} />}
+                  </div>
+                  <span className="text-sm font-bold uppercase tracking-widest text-stone-800">
+                    {showInsights ? "Less Details" : "Learn More"}
+                  </span>
+                </button>
+
+                <AnimatePresence>
+                  {showInsights && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="grid gap-3 pt-4"
+                    >
+                      {[
+                        { icon: Scale, text: "Strict Legal Compliance" },
+                        { icon: Building2, text: "Registered Public Entity" },
+                        { icon: Medal, text: "Elite Governance Model" },
+                      ].map((info, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-4 p-4 rounded-2xl bg-white shadow-sm border border-stone-100"
+                        >
+                          <info.icon size={18} className="text-emerald-600" />
+                          <span className="text-xs uppercase tracking-widest text-stone-600 font-semibold">
+                            {info.text}
+                          </span>
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* STATS CARD - High Contrast Emerald/Dark */}
+              <div className="lg:col-span-6 flex justify-center items-center py-12">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="relative w-[450px] h-[450px] md:w-[500px] md:h-[500px] flex items-center justify-center rounded-full bg-[#0D1A16] shadow-[0_0_50px_rgba(16,185,129,0.1)] border border-white/5 overflow-hidden group"
+                >
+                  {/* Animated Background Rings */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="absolute w-[90%] h-[90%] border border-dashed border-emerald-500/20 rounded-full"
+                    />
+                    <motion.div
+                      animate={{ rotate: -360 }}
+                      transition={{
+                        duration: 15,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="absolute w-[70%] h-[70%] border border-emerald-500/10 rounded-full"
+                    />
+                  </div>
+
+                  {/* Decorative grain/pattern */}
+                  <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
+
+                  {/* Main Content Container - Centered and Spaced for Circle */}
+                  <div className="relative z-10 flex flex-col items-center text-center p-12 space-y-10">
+                    {/* Top Label */}
+                    <div className="space-y-1">
+                      <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-[0.4em]">
+                        Authorized Capital
+                      </span>
+                      <div className="h-[1px] w-12 bg-emerald-500/30 mx-auto" />
+                    </div>
+
+                    {/* Hero Stats */}
+                    <div className="flex flex-col items-center">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-7xl md:text-8xl font-light tracking-tighter text-white">
+                          80.0
+                          <span className="text-emerald-500 font-serif font-bold ml-1">
+                            M
+                          </span>
+                        </span>
+                      </div>
+                      <span className="text-stone-500 font-serif italic text-2xl -mt-2">
+                        BDT
+                      </span>
+                    </div>
+
+                    {/* Bottom Grid - Redesigned for Circle fit */}
+                    <div className="w-full pt-8 border-t border-white/5 flex flex-col items-center space-y-6">
+                      <div className="space-y-1">
+                        <p className="text-stone-500 text-[9px] font-bold uppercase tracking-widest">
+                          Total Shares
+                        </p>
+                        <p className="text-2xl text-white font-light tracking-tight">
+                          8,000,000
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-stone-500 text-[9px] font-bold uppercase tracking-widest leading-none">
+                          Share Type
+                        </p>
+                        <div className="px-5 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-[11px] font-bold tracking-wide">
+                          Ordinary Class A
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Floating Sparkle/Icon */}
+                    <div className="absolute top-1/4 right-1/4 animate-pulse opacity-50">
+                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </section>

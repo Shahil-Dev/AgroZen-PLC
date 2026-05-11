@@ -1,155 +1,139 @@
 "use client";
-import { motion, Variants } from "framer-motion";
+
+import React, { useState } from "react";
 import {
-  HeartPulse,
-  Home,
-  Activity,
-  ShieldCheck,
-  ArrowUpRight,
-  Stethoscope,
-  Users,
-} from "lucide-react";
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { HeartPulse, Users, Wind, ShieldCheck, Sun } from "lucide-react";
+import Link from "next/link";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
+const CinematicText = ({
+  text,
+  delay = 0,
+}: {
+  text: string;
+  delay?: number;
+}) => (
+  <span className="inline-block overflow-hidden">
+    <motion.span
+      initial={{ y: "100%" }}
+      whileInView={{ y: "0%" }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.1, ease: [0.215, 0.61, 0.355, 1], delay }}
+      className="block"
+    >
+      {text}
+    </motion.span>
+  </span>
+);
 
-const itemVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      // ease-এর শেষে 'as any' অথবা '[number, number, number, number]' লিখে দিন
-      ease: [0.22, 1, 0.36, 1] as any,
-    },
-  },
-};
+export default function SeniorLivingSanctuary() {
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef });
 
-export default function CareSection() {
+  const imageScale = useTransform(scrollYProgress, [0, 0.6], [1, 1.12]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.25, 0.6]);
+
   return (
-    <section className="relative w-full py-24 md:py-36 bg-white overflow-hidden">
-      {/* Subtle Background Elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-rose-50/40 -skew-x-12 translate-x-32 pointer-events-none" />
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">
-          {/* LEFT CONTENT: TECHNICAL DETAILS */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-col space-y-12"
-          >
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center gap-4"
-            >
-              <span className="h-[2px] w-14 bg-rose-500 rounded-full" />
-              <span className="text-rose-500 font-black tracking-[0.4em] uppercase text-[11px] md:text-xs">
-                Compassionate Caregiving
+    <section
+      ref={sectionRef}
+      className="relative py-20 md:py-32 px-5 md:px-6 bg-[#F8F6F2] overflow-hidden"
+    >
+      <div className="6xl mx-auto">
+        {/* Main Grid - Responsive Split */}
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          {/* LEFT: STORY & EMOTION */}
+          <div className="lg:col-span-5 space-y-8 md:space-y-10">
+            <h2 className="text-5xl md:text-6xl lg:text-[5.2rem] leading-[0.92] font-light tracking-tighter text-[#1F2A24]">
+              A place where
+              <br />
+              <span className="font-serif italic text-emerald-700">
+                <CinematicText text="wisdom ages gracefully" delay={0.15} />
               </span>
-            </motion.div>
+            </h2>
 
-            <motion.div variants={itemVariants} className="space-y-6">
-              <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9] lg:max-w-md">
-                Dignified <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-br from-rose-600 via-rose-500 to-orange-500">
-                  Senior Living
-                </span>
-              </h2>
-              <p className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-lg font-medium italic">
-                "Honoring generations through specialized care." We provide
-                premium assisted living solutions with 24/7 medical supervision
-                and a warm, home-like environment.
-              </p>
-            </motion.div>
+            <p className="text-xl md:text-2xl text-[#44554A] font-light leading-tight max-w-lg">
+              Golden years should feel like the richest chapter of life. Here,
+              every sunrise brings gentle joy, meaningful connection, and deep
+              peace.
+            </p>
 
-            {/* Feature Highlights Grid */}
-            <motion.div
-              variants={itemVariants}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12"
-            >
-              {[
-                {
-                  icon: Stethoscope,
-                  title: "24/7 Support",
-                  desc: "Expert clinical monitoring and management.",
-                },
-                {
-                  icon: Users,
-                  title: "Social Wellness",
-                  desc: "Community programs for emotional health.",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "Safe Haven",
-                  desc: "Secure environments with modern amenities.",
-                },
-                {
-                  icon: Activity,
-                  title: "Geriatric Care",
-                  desc: "Specialized physiotherapy and nutrition.",
-                },
-              ].map((item, i) => (
-                <div key={i} className="group flex items-start gap-5">
-                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-rose-200 transition-all duration-300">
-                    <item.icon size={26} strokeWidth={1.5} />
-                  </div>
-                  <div className="space-y-2 mt-1">
-                    <h5 className="font-bold text-slate-900 text-lg leading-none tracking-tight">
-                      {item.title}
-                    </h5>
-                    <p className="text-slate-400 text-sm leading-snug">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="pt-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative flex items-center gap-6 px-12 py-6 bg-slate-900 text-white rounded-[2rem] font-bold overflow-hidden shadow-2xl transition-all"
+            {/* Philosophy Toggle */}
+            <div className="pt-4">
+              <motion.div
+                onClick={() =>
+                  setExpanded(expanded === "philosophy" ? null : "philosophy")
+                }
+                className="group flex items-center gap-4 cursor-pointer w-fit"
               >
-                <span className="relative z-10 tracking-widest text-lg uppercase">
-                  Explore Care
-                </span>
-                <div className="relative z-10 bg-white/10 p-2 rounded-full group-hover:rotate-45 transition-transform duration-500">
-                  <ArrowUpRight size={24} />
+                <div className="text-sm uppercase tracking-widest font-medium text-emerald-700 group-hover:tracking-[4px] transition-all duration-300">
+                  Our Philosophy
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-600 to-rose-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </motion.button>
-            </motion.div>
-          </motion.div>
+                <div
+                  className={`w-9 h-px bg-emerald-700 transition-all duration-300 ${expanded === "philosophy" ? "rotate-45 w-9" : "group-hover:w-12"}`}
+                />
+              </motion.div>
 
-          {/* RIGHT CONTENT: VISUALS */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="relative flex justify-center"
-          >
-            <div className="relative w-full aspect-square max-w-[500px]">
-              {/* Outer Decorative Circle with Pulse Effect */}
-              <div className="absolute inset-0 border border-rose-100 rounded-full animate-[pulse_4s_infinite]" />
-              <div className="absolute inset-10 border border-rose-50 rounded-full animate-[pulse_6s_infinite]" />
+              <AnimatePresence>
+                {expanded === "philosophy" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-6 text-[#44554A] text-[17px] leading-relaxed border-l-2 border-emerald-200 pl-6"
+                  >
+                    Aging is not decline — it is continuation. We honor life
+                    experience while nurturing vitality through nature,
+                    community, and compassionate care.
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-[85%] aspect-square bg-rose-50 rounded-[4rem] p-12 border border-rose-100/50 shadow-inner flex items-center justify-center overflow-hidden">
-                  {/* Floating Elements Background */}
+              {/* Explore Link */}
+              <div className="mt-8">
+                <Link
+                  href="/care"
+                  className="group flex items-center gap-4 w-fit"
+                >
+                  <div className="text-sm uppercase tracking-widest font-medium text-emerald-700 group-hover:tracking-[4px] transition-all duration-300">
+                    Explore the Sanctuary
+                  </div>
+                  <div className="w-9 h-px bg-emerald-700 group-hover:w-12 transition-all duration-300" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: CINEMATIC IMAGE */}
+          <div className="lg:col-span-7 relative">
+            <div className="relative aspect-[4/3] sm:aspect-[16/13] lg:aspect-[16/12] rounded-3xl md:rounded-[3.5rem] overflow-hidden shadow-2xl border border-[#EDE8E0]">
+              <motion.img
+                style={{ scale: imageScale }}
+                src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=1920"
+                alt="Elderly couple enjoying peaceful morning in garden"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+
+              {/* Soft Black Gradient Overlay */}
+              <div
+                className="absolute inset-0 bg-gradient-to-b 
+                    from-black/20 via-black/40 to-black/70 
+                    md:from-black/10 md:via-black/35 md:to-black/65"
+              />
+
+              {/* Optional subtle vignette for extra depth */}
+              <div
+                className="absolute inset-0 bg-gradient-to-r 
+                    from-black/10 via-transparent to-black/10"
+              />
+
+              {/* Floating serene elements */}
+              <div className="hidden md:flex absolute inset-0 items-center justify-center">
+                <div className="relative w-72 h-72 lg:w-80 lg:h-80">
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{
@@ -157,60 +141,35 @@ export default function CareSection() {
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="absolute inset-0 opacity-[0.05]"
-                  >
-                    <HeartPulse size={400} className="text-rose-900" />
-                  </motion.div>
-
-                  <div className="grid grid-cols-2 gap-6 relative z-10">
-                    {[
-                      { icon: Home, label: "Eco-Lodge" },
-                      { icon: ShieldCheck, label: "Security" },
-                      { icon: Activity, label: "Vitality" },
-                      { icon: Users, label: "Comfort" },
-                    ].map((node, i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ scale: 1.1, y: -10 }}
-                        className="w-28 h-28 md:w-36 md:h-36 bg-white rounded-[2.5rem] shadow-xl border border-rose-50 flex flex-col items-center justify-center gap-3 group transition-all"
-                      >
-                        <node.icon
-                          size={32}
-                          className="text-rose-500 group-hover:scale-110 transition-transform"
-                        />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-900">
-                          {node.label}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
+                    className="absolute inset-0 border border-white/30 rounded-full"
+                  />
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 65,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-10 border border-white/20 rounded-full"
+                  />
                 </div>
               </div>
 
-              {/* Floating Vital Signs Card */}
-              <motion.div
-                animate={{ x: [0, -15, 0], y: [0, 15, 0] }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute -bottom-6 -left-6 bg-white p-6 rounded-[2.5rem] shadow-2xl border border-slate-50 flex items-center gap-5"
-              >
-                <div className="w-14 h-14 bg-rose-500 rounded-2xl flex items-center justify-center shadow-lg shadow-rose-200">
-                  <Activity className="text-white animate-pulse" size={24} />
+              {/* Morning Ritual Caption */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white z-10">
+                <div className="flex items-center gap-3 mb-3">
+                  <Sun className="text-amber-300" size={26} />
+                  <span className="uppercase text-xs tracking-widest opacity-75">
+                    Morning in the Sanctuary
+                  </span>
                 </div>
-                <div className="pr-4">
-                  <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest">
-                    Live Monitoring
-                  </p>
-                  <p className="text-slate-900 font-extrabold text-xl tracking-tight">
-                    Active Pulse
-                  </p>
-                </div>
-              </motion.div>
+                <p className="text-xl md:text-3xl font-light leading-tight max-w-md">
+                  Gentle yoga under the trees. Warm herbal tea from our garden.
+                  A new day embraced with gratitude.
+                </p>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
