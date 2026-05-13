@@ -2,9 +2,19 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { RiHeartPulseLine, RiShieldCrossLine, RiHomeHeartLine, RiMicroscopeLine, RiTimeLine, RiLeafLine, RiGroupLine, RiArrowRightUpLine, RiStethoscopeLine, RiWifiLine } from "react-icons/ri";
+import {
+  RiHeartPulseLine,
+  RiShieldCrossLine,
+  RiHomeHeartLine,
+  RiMicroscopeLine,
+  RiTimeLine,
+  RiLeafLine,
+  RiGroupLine,
+  RiArrowRightUpLine,
+  RiStethoscopeLine,
+  RiWifiLine,
+} from "react-icons/ri";
 import { HiOutlineSparkles } from "react-icons/hi";
-
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -34,11 +44,21 @@ const scaleIn = {
 };
 
 /* ─── Reusable Eyebrow Label ─────────────────────── */
-function Eyebrow({ children, light = false }) {
+function Eyebrow({
+  children,
+  light = false,
+}: {
+  children: React.ReactNode;
+  light?: boolean;
+}) {
   return (
-    <div className={`inline-flex items-center gap-2 ${light ? "text-[#52B788]" : "text-[#2D6A4F]"}`}>
+    <div
+      className={`inline-flex items-center gap-2 ${light ? "text-[#52B788]" : "text-[#2D6A4F]"}`}
+    >
       <span className={`w-5 h-px ${light ? "bg-[#52B788]" : "bg-[#2D6A4F]"}`} />
-      <span className="text-[9px] font-bold uppercase tracking-[0.45em]">{children}</span>
+      <span className="text-[9px] font-bold uppercase tracking-[0.45em]">
+        {children}
+      </span>
     </div>
   );
 }
@@ -46,11 +66,19 @@ function Eyebrow({ children, light = false }) {
 /* ─── Parallax Image Wrapper ─────────────────────── */
 function ParallaxImage({ src, alt, className }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
   const y = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.img src={src} alt={alt} style={{ y }} className="w-full h-full object-cover scale-110" />
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ y }}
+        className="w-full h-full object-cover scale-110"
+      />
     </div>
   );
 }
@@ -59,18 +87,25 @@ function ParallaxImage({ src, alt, className }) {
 function StatChip({ value, label }) {
   return (
     <div className="flex flex-col gap-1">
-      <span style={{ fontFamily: "'Cormorant Garamond', serif" }}
-        className="text-4xl md:text-5xl font-bold text-[#1B3A2D] leading-none">
+      <span
+        style={{ fontFamily: "'Cormorant Garamond', serif" }}
+        className="text-4xl md:text-5xl font-bold text-[#1B3A2D] leading-none"
+      >
         {value}
       </span>
-      <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#2D6A4F]/60">{label}</span>
+      <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#2D6A4F]/60">
+        {label}
+      </span>
     </div>
   );
 }
 
 export default function SeniorCarePage() {
   const heroRef = useRef(null);
-  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
   const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
   const heroTextY = useTransform(heroScroll, [0, 1], ["0%", "12%"]);
 
@@ -128,14 +163,18 @@ export default function SeniorCarePage() {
         style={{ fontFamily: "'Jost', sans-serif" }}
         className="min-h-screen bg-[#F4F1EC] text-[#1B3A2D] selection:bg-emerald-200"
       >
-
         {/* ══════════════════════════════════════════════
             §1  HERO — EDITORIAL FULL BLEED
         ══════════════════════════════════════════════ */}
-        <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
-
+        <section
+          ref={heroRef}
+          className="relative h-screen min-h-[700px] flex items-end overflow-hidden"
+        >
           {/* Parallax BG */}
-          <motion.div style={{ y: heroImgY }} className="absolute inset-0 scale-110">
+          <motion.div
+            style={{ y: heroImgY }}
+            className="absolute inset-0 scale-110"
+          >
             <img
               src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=1920"
               alt="Elderly Care Hero"
@@ -156,35 +195,55 @@ export default function SeniorCarePage() {
           >
             {/* Left: Headline */}
             <div className="space-y-7">
-              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                custom={0}
+              >
                 <Eyebrow light>Zenith Care · Dignity in Living</Eyebrow>
               </motion.div>
 
               <motion.h1
-                initial="hidden" animate="visible" variants={fadeUp} custom={1}
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                custom={1}
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 className="text-6xl md:text-8xl lg:text-[7rem] font-bold text-white leading-[0.92] tracking-tight"
               >
-                Redefining<br />
-                <em className="italic font-light text-[#52B788]">Senior Life.</em>
+                Redefining
+                <br />
+                <em className="italic font-light text-[#52B788]">
+                  Senior Life.
+                </em>
               </motion.h1>
 
               <motion.p
-                initial="hidden" animate="visible" variants={fadeUp} custom={2}
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                custom={2}
                 className="max-w-sm text-[#E8E3DA]/70 text-sm font-light leading-relaxed"
               >
                 AgroZen's healthcare wing unites precision medicine with a
-                soulful philosophy — where every elder finds not just care,
-                but a reason to thrive.
+                soulful philosophy — where every elder finds not just care, but
+                a reason to thrive.
               </motion.p>
 
               <motion.div
-                initial="hidden" animate="visible" variants={fadeUp} custom={3}
+                initial="hidden"
+                animate="visible"
+                variants={fadeUp}
+                custom={3}
                 className="flex items-center gap-5"
               >
                 <button className="group flex items-center gap-3 px-7 py-4 bg-[#52B788] hover:bg-[#2D6A4F] rounded-full text-white text-[10px] font-bold uppercase tracking-[0.35em] transition-all duration-500">
                   Schedule a Visit
-                  <RiArrowRightUpLine size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <RiArrowRightUpLine
+                    size={14}
+                    className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  />
                 </button>
                 <button className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 hover:text-white fancy-link transition-colors duration-300">
                   Our Services
@@ -194,22 +253,43 @@ export default function SeniorCarePage() {
 
             {/* Right: Floating stat glass cards */}
             <motion.div
-              initial="hidden" animate="visible" variants={fadeUp} custom={2}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              custom={2}
               className="hidden md:flex flex-col gap-4 items-end"
             >
               <div className="glass-dark rounded-3xl px-8 py-6 space-y-1">
-                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">Residents Served</p>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-5xl font-bold text-white">500+</p>
+                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">
+                  Residents Served
+                </p>
+                <p
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  className="text-5xl font-bold text-white"
+                >
+                  500+
+                </p>
               </div>
               <div className="glass-dark rounded-3xl px-8 py-6 space-y-1">
-                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">Care Staff</p>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-5xl font-bold text-white">120</p>
+                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">
+                  Care Staff
+                </p>
+                <p
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  className="text-5xl font-bold text-white"
+                >
+                  120
+                </p>
               </div>
               <div className="glass-dark rounded-3xl px-8 py-5 flex items-center gap-4">
                 <RiHeartPulseLine size={22} className="text-[#52B788]" />
                 <div>
-                  <p className="text-[9px] text-white/50 font-bold uppercase tracking-[0.3em]">Monitoring</p>
-                  <p className="text-sm font-semibold text-white">24 / 7 Live</p>
+                  <p className="text-[9px] text-white/50 font-bold uppercase tracking-[0.3em]">
+                    Monitoring
+                  </p>
+                  <p className="text-sm font-semibold text-white">
+                    24 / 7 Live
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -224,23 +304,29 @@ export default function SeniorCarePage() {
           >
             <motion.div
               animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.8,
+                ease: "easeInOut",
+              }}
               className="w-px h-10 bg-gradient-to-b from-[#52B788] to-transparent"
             />
-            <span className="text-[8px] uppercase tracking-[0.4em] text-white/30">Scroll</span>
+            <span className="text-[8px] uppercase tracking-[0.4em] text-white/30">
+              Scroll
+            </span>
           </motion.div>
         </section>
-
 
         {/* ══════════════════════════════════════════════
             §2  CLINICAL INFRASTRUCTURE — SPLIT LAYOUT
         ══════════════════════════════════════════════ */}
         <section className="py-32 md:py-44 px-6 md:px-14 overflow-hidden linen">
           <div className="max-w-7xl mx-auto">
-
             {/* Section header */}
             <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={fadeUp}
               className="mb-20 md:mb-28 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
             >
@@ -250,8 +336,11 @@ export default function SeniorCarePage() {
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   className="text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight max-w-2xl"
                 >
-                  Advanced Clinical<br />
-                  <em className="font-light italic text-[#2D6A4F]">Infrastructure.</em>
+                  Advanced Clinical
+                  <br />
+                  <em className="font-light italic text-[#2D6A4F]">
+                    Infrastructure.
+                  </em>
                 </h2>
               </div>
               {/* Stats row */}
@@ -263,7 +352,6 @@ export default function SeniorCarePage() {
             </motion.div>
 
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-
               {/* Left: Feature cards */}
               <div className="space-y-6">
                 {[
@@ -303,13 +391,19 @@ export default function SeniorCarePage() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <h4 style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                          className="text-xl font-bold tracking-tight">{item.title}</h4>
+                        <h4
+                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                          className="text-xl font-bold tracking-tight"
+                        >
+                          {item.title}
+                        </h4>
                         <span className="px-2 py-0.5 rounded-full bg-[#2D6A4F]/8 text-[#2D6A4F] text-[8px] font-bold uppercase tracking-widest">
                           {item.tag}
                         </span>
                       </div>
-                      <p className="text-sm text-[#1B3A2D]/55 leading-relaxed font-light">{item.desc}</p>
+                      <p className="text-sm text-[#1B3A2D]/55 leading-relaxed font-light">
+                        {item.desc}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
@@ -317,7 +411,9 @@ export default function SeniorCarePage() {
 
               {/* Right: Asymmetric image composition */}
               <motion.div
-                initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
                 variants={scaleIn}
                 className="relative"
               >
@@ -340,9 +436,15 @@ export default function SeniorCarePage() {
                   className="glass-card absolute -bottom-6 -right-4 md:-right-10 rounded-3xl p-6 shadow-xl max-w-[200px]"
                 >
                   <RiHeartPulseLine size={22} className="text-[#2D6A4F] mb-3" />
-                  <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#2D6A4F] mb-0.5">Precision</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-2xl font-bold text-[#1B3A2D]">99.9%<br />
+                  <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#2D6A4F] mb-0.5">
+                    Precision
+                  </p>
+                  <p
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    className="text-2xl font-bold text-[#1B3A2D]"
+                  >
+                    99.9%
+                    <br />
                     <span className="text-base font-light">Accuracy</span>
                   </p>
                 </motion.div>
@@ -357,7 +459,9 @@ export default function SeniorCarePage() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#1B3A2D]">Live Monitoring</span>
+                    <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#1B3A2D]">
+                      Live Monitoring
+                    </span>
                   </div>
                 </motion.div>
 
@@ -368,16 +472,16 @@ export default function SeniorCarePage() {
           </div>
         </section>
 
-
         {/* ══════════════════════════════════════════════
             §3  RESIDENTIAL ECOSYSTEM — LIVING WITH PURPOSE
         ══════════════════════════════════════════════ */}
         <section className="py-24 px-6 md:px-14 bg-[#F4F1EC]">
           <div className="max-w-7xl mx-auto">
-
             {/* Full-width quote banner */}
             <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={fadeUp}
               className="relative overflow-hidden rounded-[3rem] bg-[#1B3A2D] az-grain mb-20 px-10 md:px-20 py-16 md:py-20 flex flex-col md:flex-row items-center gap-10"
             >
@@ -389,21 +493,24 @@ export default function SeniorCarePage() {
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 className="relative z-10 text-4xl md:text-6xl font-light italic text-white max-w-2xl leading-tight"
               >
-                "A place where every morning brings fresh air, fresh food,
-                and a fresh reason to live."
+                "A place where every morning brings fresh air, fresh food, and a
+                fresh reason to live."
               </blockquote>
               <div className="relative z-10 shrink-0 flex flex-col gap-2">
                 <RiLeafLine size={40} className="text-[#52B788]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#52B788]">AgroZen Philosophy</p>
+                <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#52B788]">
+                  AgroZen Philosophy
+                </p>
               </div>
             </motion.div>
 
             {/* Split: Text + Masonry Photos */}
             <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 items-start">
-
               {/* Left: Copy */}
               <motion.div
-                initial="hidden" whileInView="visible" viewport={{ once: true }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
                 variants={fadeUp}
                 className="space-y-8 lg:pt-4 lg:sticky lg:top-32"
               >
@@ -412,18 +519,20 @@ export default function SeniorCarePage() {
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   className="text-5xl md:text-6xl font-bold leading-[0.95] tracking-tight"
                 >
-                  Living with<br />
+                  Living with
+                  <br />
                   <em className="italic font-light text-[#2D6A4F]">Purpose.</em>
                 </h2>
                 <p className="text-[#1B3A2D]/60 text-sm font-light leading-relaxed max-w-sm">
-                  Our residential complexes sit within our own organic agricultural
-                  lands. Every day, residents wake to birdsong, fresh-harvested produce,
-                  and a community that sees them — not just their condition.
+                  Our residential complexes sit within our own organic
+                  agricultural lands. Every day, residents wake to birdsong,
+                  fresh-harvested produce, and a community that sees them — not
+                  just their condition.
                 </p>
                 <p className="text-[#1B3A2D]/60 text-sm font-light leading-relaxed max-w-sm">
-                  Spiritual wellness gardens, cultural events, and multi-generational
-                  programmes ensure each resident writes a new chapter — not simply
-                  completes one.
+                  Spiritual wellness gardens, cultural events, and
+                  multi-generational programmes ensure each resident writes a
+                  new chapter — not simply completes one.
                 </p>
 
                 {/* Tag chips */}
@@ -433,8 +542,14 @@ export default function SeniorCarePage() {
                     { icon: RiGroupLine, label: "Community Events" },
                     { icon: RiHomeHeartLine, label: "24/7 Pastoral Care" },
                   ].map((t, i) => (
-                    <div key={i} className="flex items-center gap-2 px-5 py-2.5 bg-[#1B3A2D]/6 hover:bg-[#2D6A4F] hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 cursor-default group">
-                      <t.icon size={12} className="text-[#2D6A4F] group-hover:text-white transition-colors" />
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 px-5 py-2.5 bg-[#1B3A2D]/6 hover:bg-[#2D6A4F] hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 cursor-default group"
+                    >
+                      <t.icon
+                        size={12}
+                        className="text-[#2D6A4F] group-hover:text-white transition-colors"
+                      />
                       {t.label}
                     </div>
                   ))}
@@ -451,10 +566,26 @@ export default function SeniorCarePage() {
               {/* Right: Masonry photo grid */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { src: "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&w=800", h: "h-72", delay: 0 },
-                  { src: "https://images.pexels.com/photos/1722183/pexels-photo-1722183.jpeg?auto=compress&cs=tinysrgb&w=800", h: "h-48 mt-10", delay: 0.1 },
-                  { src: "https://images.pexels.com/photos/2058130/pexels-photo-2058130.jpeg?auto=compress&cs=tinysrgb&w=800", h: "h-48", delay: 0.15 },
-                  { src: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=800", h: "h-72", delay: 0.2 },
+                  {
+                    src: "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&w=800",
+                    h: "h-72",
+                    delay: 0,
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/1722183/pexels-photo-1722183.jpeg?auto=compress&cs=tinysrgb&w=800",
+                    h: "h-48 mt-10",
+                    delay: 0.1,
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/2058130/pexels-photo-2058130.jpeg?auto=compress&cs=tinysrgb&w=800",
+                    h: "h-48",
+                    delay: 0.15,
+                  },
+                  {
+                    src: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=800",
+                    h: "h-72",
+                    delay: 0.2,
+                  },
                 ].map((p, i) => (
                   <motion.div
                     key={i}
@@ -465,14 +596,17 @@ export default function SeniorCarePage() {
                     variants={scaleIn}
                     className={`${p.h} rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-500`}
                   >
-                    <img src={p.src} alt="Senior Living" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                    <img
+                      src={p.src}
+                      alt="Senior Living"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    />
                   </motion.div>
                 ))}
               </div>
             </div>
           </div>
         </section>
-
 
         {/* ══════════════════════════════════════════════
             §4  TELEMEDICINE & ACCESS — DARK SECTION
@@ -483,10 +617,11 @@ export default function SeniorCarePage() {
           <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#52B788]/10 rounded-full blur-[60px] pointer-events-none" />
 
           <div className="max-w-7xl mx-auto relative z-10">
-
             {/* Header */}
             <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={fadeUp}
               className="mb-20 space-y-5 max-w-2xl"
             >
@@ -495,13 +630,16 @@ export default function SeniorCarePage() {
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 className="text-5xl md:text-7xl font-bold text-white leading-[0.92] tracking-tight"
               >
-                Care Without<br />
-                <em className="font-light italic text-[#52B788]">Boundaries.</em>
+                Care Without
+                <br />
+                <em className="font-light italic text-[#52B788]">
+                  Boundaries.
+                </em>
               </h2>
               <p className="text-[#E8E3DA]/50 text-sm font-light leading-relaxed max-w-md">
                 The Zenith Care digital portal connects families to real-time
-                health dashboards, physician consultations, and progress
-                reports — wherever they are in the world.
+                health dashboards, physician consultations, and progress reports
+                — wherever they are in the world.
               </p>
             </motion.div>
 
@@ -552,7 +690,9 @@ export default function SeniorCarePage() {
                   >
                     {box.val}
                   </h4>
-                  <p className="text-sm text-[#E8E3DA]/45 font-light leading-relaxed">{box.desc}</p>
+                  <p className="text-sm text-[#E8E3DA]/45 font-light leading-relaxed">
+                    {box.desc}
+                  </p>
 
                   {/* Bottom border reveal on hover */}
                   <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#52B788] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-center" />
@@ -562,7 +702,9 @@ export default function SeniorCarePage() {
 
             {/* Inline metric strip */}
             <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={fadeUp}
               className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/8 rounded-3xl overflow-hidden"
             >
@@ -572,16 +714,24 @@ export default function SeniorCarePage() {
                 { v: "98%", l: "Family Satisfaction" },
                 { v: "< 3m", l: "Emergency Response" },
               ].map((m, i) => (
-                <div key={i} className="bg-[#0F1F16] px-8 py-7 flex flex-col gap-1">
-                  <span style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-3xl md:text-4xl font-bold text-white">{m.v}</span>
-                  <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#52B788]/60">{m.l}</span>
+                <div
+                  key={i}
+                  className="bg-[#0F1F16] px-8 py-7 flex flex-col gap-1"
+                >
+                  <span
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    className="text-3xl md:text-4xl font-bold text-white"
+                  >
+                    {m.v}
+                  </span>
+                  <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#52B788]/60">
+                    {m.l}
+                  </span>
                 </div>
               ))}
             </motion.div>
           </div>
         </section>
-
 
         {/* ══════════════════════════════════════════════
             §5  CTA — WARM & HUMAN
@@ -589,10 +739,15 @@ export default function SeniorCarePage() {
         <section className="py-32 px-6 md:px-14 linen">
           <div className="max-w-7xl mx-auto">
             <motion.div
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               variants={scaleIn}
               className="relative rounded-[4rem] overflow-hidden az-grain"
-              style={{ background: "linear-gradient(135deg, #1B3A2D 0%, #2D6A4F 60%, #1B3A2D 100%)" }}
+              style={{
+                background:
+                  "linear-gradient(135deg, #1B3A2D 0%, #2D6A4F 60%, #1B3A2D 100%)",
+              }}
             >
               {/* Decorative elements */}
               <div className="absolute inset-0 pointer-events-none">
@@ -608,8 +763,11 @@ export default function SeniorCarePage() {
                     style={{ fontFamily: "'Cormorant Garamond', serif" }}
                     className="text-5xl md:text-6xl font-bold text-white leading-[0.95] tracking-tight"
                   >
-                    Your Family is<br />
-                    <em className="font-light italic text-[#52B788]">Our Responsibility.</em>
+                    Your Family is
+                    <br />
+                    <em className="font-light italic text-[#52B788]">
+                      Our Responsibility.
+                    </em>
                   </h2>
                   <p className="text-[#E8E3DA]/60 text-sm font-light leading-relaxed max-w-sm">
                     Whether you're enquiring about residential availability,
@@ -652,10 +810,21 @@ export default function SeniorCarePage() {
                       }`}
                     >
                       <div>
-                        <p className={`text-sm font-semibold mb-0.5 ${cta.primary ? "" : "text-white"}`}>{cta.title}</p>
-                        <p className={`text-[10px] font-light ${cta.primary ? "text-white/70 hover:text-[#1B3A2D]/60" : "text-white/40"}`}>{cta.desc}</p>
+                        <p
+                          className={`text-sm font-semibold mb-0.5 ${cta.primary ? "" : "text-white"}`}
+                        >
+                          {cta.title}
+                        </p>
+                        <p
+                          className={`text-[10px] font-light ${cta.primary ? "text-white/70 hover:text-[#1B3A2D]/60" : "text-white/40"}`}
+                        >
+                          {cta.desc}
+                        </p>
                       </div>
-                      <RiArrowRightUpLine size={18} className="shrink-0 opacity-60" />
+                      <RiArrowRightUpLine
+                        size={18}
+                        className="shrink-0 opacity-60"
+                      />
                     </motion.button>
                   ))}
                 </div>
@@ -663,7 +832,6 @@ export default function SeniorCarePage() {
             </motion.div>
           </div>
         </section>
-
       </main>
     </>
   );
