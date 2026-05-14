@@ -170,14 +170,14 @@ export default function AgroZenEvolution() {
 
             <div className="relative z-10 grid lg:grid-cols-12 gap-16 items-center">
               <div className="lg:col-span-6 space-y-8">
-                <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none text-stone-800">
+                <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none text-stone-800 text-left">
                   Built on <br />
                   <span className="font-serif italic text-emerald-600">
                     Institutional
                   </span>{" "}
                   Trust
                 </h2>
-                <p className="text-stone-500 text-lg max-w-md font-light leading-relaxed">
+                <p className="text-stone-500 text-lg max-w-md font-light leading-relaxed text-left">
                   As a Public Company Limited, our foundation is transparency.
                   We operate under rigid standards to ensure long-term stability
                   and value for our stakeholders.
@@ -226,11 +226,13 @@ export default function AgroZenEvolution() {
                 </AnimatePresence>
               </div>
 
-              {/* STATS CARD - High Contrast Emerald/Dark */}
-              <div className="lg:col-span-6 flex justify-center items-center py-12">
+              {/* STATS CARD - Mobile এ square + rounded-15px */}
+              <div className="lg:col-span-6 flex justify-center items-center  hidden  md:block  md:py-12">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="relative w-[450px] h-[450px] md:w-[500px] md:h-[500px] flex items-center justify-center rounded-full bg-[#0D1A16] shadow-[0_0_50px_rgba(16,185,129,0.1)] border border-white/5 overflow-hidden group"
+                  className="relative w-full max-w-[420px] aspect-square md:w-[500px] md:h-[500px] flex items-center justify-center 
+                     rounded-[15px] md:rounded-full bg-[#0D1A16] shadow-[0_0_50px_rgba(16,185,129,0.1)] 
+                     border border-white/5 overflow-hidden group"
                 >
                   {/* Animated Background Rings */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -257,20 +259,20 @@ export default function AgroZenEvolution() {
                   {/* Decorative grain/pattern */}
                   <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
 
-                  {/* Main Content Container - Centered and Spaced for Circle */}
-                  <div className="relative z-10 flex flex-col items-center text-center p-12 space-y-10">
+                  {/* Main Content - Mobile এ left align */}
+                  <div className="relative z-10 w-full px-8 md:px-12 flex flex-col md:items-center md:text-center text-left space-y-8 md:space-y-10">
                     {/* Top Label */}
                     <div className="space-y-1">
                       <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-[0.4em]">
                         Authorized Capital
                       </span>
-                      <div className="h-[1px] w-12 bg-emerald-500/30 mx-auto" />
+                      <div className="h-[1px] w-12 bg-emerald-500/30 md:mx-auto" />
                     </div>
 
                     {/* Hero Stats */}
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col md:items-center">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-7xl md:text-8xl font-light tracking-tighter text-white">
+                        <span className="text-6xl md:text-8xl font-light tracking-tighter text-white">
                           80.0
                           <span className="text-emerald-500 font-serif font-bold ml-1">
                             M
@@ -282,8 +284,8 @@ export default function AgroZenEvolution() {
                       </span>
                     </div>
 
-                    {/* Bottom Grid - Redesigned for Circle fit */}
-                    <div className="w-full pt-8 border-t border-white/5 flex flex-col items-center space-y-6">
+                    {/* Bottom Grid */}
+                    <div className="w-full pt-6 md:pt-8 border-t border-white/5 flex flex-col md:items-center space-y-6">
                       <div className="space-y-1">
                         <p className="text-stone-500 text-[9px] font-bold uppercase tracking-widest">
                           Total Shares
@@ -293,18 +295,18 @@ export default function AgroZenEvolution() {
                         </p>
                       </div>
 
-                      <div className="space-y-2">
+                      <div className="space-y-2 hidden md:block">
                         <p className="text-stone-500 text-[9px] font-bold uppercase tracking-widest leading-none">
                           Share Type
                         </p>
-                        <div className="px-5 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-[11px] font-bold tracking-wide">
+                        <div className="px-5 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-[11px] font-bold tracking-wide inline-block">
                           Ordinary Class A
                         </div>
                       </div>
                     </div>
 
                     {/* Floating Sparkle/Icon */}
-                    <div className="absolute top-1/4 right-1/4 animate-pulse opacity-50">
+                    <div className="absolute top-6 right-6 md:top-1/4 md:right-1/4 animate-pulse opacity-50">
                       <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
                     </div>
                   </div>

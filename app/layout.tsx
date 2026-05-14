@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AgroZen | Future of Sustainable Living",
+  title: "AgroZen Care PLC",
   description: "Experience the harmony of nature and luxury.",
 };
 

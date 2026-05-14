@@ -1,4 +1,4 @@
-import AcademySection from "@/components/ui/AcademySection";
+// import AcademySection from "@/components/ui/AcademySection";
 import AgroSection from "@/components/ui/AgroSection";
 import CareSection from "@/components/ui/CareSection";
 import Hero from "@/components/ui/Hero";
@@ -12,7 +12,7 @@ export default function Home() {
       <HomeSections></HomeSections>
       <AgroSection></AgroSection>
       <CareSection></CareSection>
-      <AcademySection></AcademySection>
+      {/* <AcademySection></AcademySection> */}
     </div>
   );
 }

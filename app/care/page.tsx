@@ -1,838 +1,911 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  RiHeartPulseLine,
-  RiShieldCrossLine,
-  RiHomeHeartLine,
-  RiMicroscopeLine,
-  RiTimeLine,
-  RiLeafLine,
-  RiGroupLine,
-  RiArrowRightUpLine,
-  RiStethoscopeLine,
-  RiWifiLine,
-} from "react-icons/ri";
-import { HiOutlineSparkles } from "react-icons/hi";
+  HeartPulse,
+  Activity,
+  Syringe,
+  Flower2,
+  Dumbbell,
+  Moon,
+  Accessibility,
+  ShieldCheck,
+  Home,
+  Zap,
+  Tv,
+  LayoutGrid,
+  BookOpen,
+  Utensils,
+  ShoppingCart,
+  WashingMachine,
+  UserCheck,
+  BedDouble,
+  ArrowRight,
+  X,
+  MapPin,
+  Phone,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.85, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
+const AgroZenCarePage = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [modalData, setModalData] = useState<{
+    title: string;
+    content: string;
+  } | null>(null);
 
-const fadeLeft = {
-  hidden: { opacity: 0, x: -40 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.1, duration: 0.85, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
+  const healthData = [
+    {
+      icon: HeartPulse,
+      title: "Regular Health Check-ups",
+      desc: "Comprehensive geriatric assessments, preventive diagnostics, and personalized monitoring plans designed to support long-term wellness and early medical intervention.",
+      image:
+        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      icon: Activity,
+      title: "24/7 Medical Response",
+      desc: "Dedicated nursing professionals and emergency-ready medical facilities ensure immediate assistance and compassionate care at every hour.",
+      image:
+        "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      icon: Syringe,
+      title: "Medicine Coordination",
+      desc: "Automated prescription management and doorstep medicine delivery provide comfort, consistency, and peace of mind for residents and families.",
+      image:
+        "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      icon: UserCheck,
+      title: "Physiotherapy & Recovery",
+      desc: "Advanced rehabilitation programs and mobility-focused therapies help residents maintain independence, flexibility, and confidence.",
+      image:
+        "https://images.unsplash.com/photo-1516549655669-df1a32f6df7b?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      icon: Flower2,
+      title: "Nature Meditation",
+      desc: "Quiet gardens, reflective walkways, and serene natural landscapes encourage mindfulness, emotional balance, and inner calm.",
+      image:
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2000&auto=format&fit=crop",
+    },
+    {
+      icon: Dumbbell,
+      title: "Wellness Fitness Studio",
+      desc: "Age-sensitive fitness programs, guided yoga, and therapeutic movement sessions support healthy and active aging.",
+      image:
+        "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2000&auto=format&fit=crop",
+    },
+  ];
 
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+  const livingData = [
+    {
+      icon: Accessibility,
+      title: "Barrier-Free Living",
+      desc: "Every pathway, corridor, and residence is intentionally designed to minimize obstacles and maximize effortless mobility.",
+    },
+    {
+      icon: Zap,
+      title: "Backup Power Elevators",
+      desc: "Reliable elevator systems with instant emergency power backup ensure uninterrupted accessibility throughout the community.",
+    },
+    {
+      icon: MapPin,
+      title: "Wheelchair-Friendly Grounds",
+      desc: "Smooth landscaped pathways and spacious outdoor movement areas create a safe and graceful experience for every resident.",
+    },
+    {
+      icon: Home,
+      title: "Ventilated Luxury Residences",
+      desc: "Natural light, premium airflow design, and spacious interiors cultivate a calm and breathable living atmosphere.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Integrated Safety Systems",
+      desc: "Emergency response alarms, support rails, and intelligent safety infrastructure provide reassurance for residents and families alike.",
+    },
+  ];
 
-/* ─── Reusable Eyebrow Label ─────────────────────── */
-function Eyebrow({
-  children,
-  light = false,
-}: {
-  children: React.ReactNode;
-  light?: boolean;
-}) {
+  const socialData = [
+    {
+      icon: Tv,
+      title: "Cinema Lounge",
+      desc: "A sophisticated social lounge for movie nights, celebrations, storytelling sessions, and meaningful interactions.",
+    },
+    {
+      icon: LayoutGrid,
+      title: "Indoor Recreation",
+      desc: "Dedicated activity spaces for chess, wellness games, and social engagement that encourage mental stimulation and companionship.",
+    },
+    {
+      icon: BookOpen,
+      title: "Modern Reading Library",
+      desc: "A peaceful literary environment curated for quiet reflection, lifelong learning, and intellectual inspiration.",
+    },
+  ];
+
+  const diningData = [
+    {
+      icon: Utensils,
+      title: "Healthy Dining Hall",
+      desc: "Fresh farm-to-table meals curated by nutrition experts to support senior wellness and dietary comfort.",
+    },
+    {
+      icon: ShoppingCart,
+      title: "Mini-Mart Convenience",
+      desc: "Daily essentials and personal care products available within the community for effortless access.",
+    },
+    {
+      icon: WashingMachine,
+      title: "Laundry & Linen Care",
+      desc: "Professional cleaning services that ensure convenience, comfort, and elevated living standards.",
+    },
+    {
+      icon: UserCheck,
+      title: "Housekeeping Services",
+      desc: "Dedicated staff maintain every residence with exceptional cleanliness, care, and discretion.",
+    },
+    {
+      icon: BedDouble,
+      title: "Luxury Guest Suites",
+      desc: "Elegant accommodations for visiting family members to stay connected and close to loved ones.",
+    },
+  ];
+
+  const sections = [
+    {
+      title: "Health & Wellness",
+      data: healthData,
+    },
+    {
+      title: "Living Experience",
+      data: livingData,
+    },
+    {
+      title: "Social Lifestyle",
+      data: socialData,
+    },
+    {
+      title: "Daily Concierge",
+      data: diningData,
+    },
+  ];
+
   return (
-    <div
-      className={`inline-flex items-center gap-2 ${light ? "text-[#52B788]" : "text-[#2D6A4F]"}`}
-    >
-      <span className={`w-5 h-px ${light ? "bg-[#52B788]" : "bg-[#2D6A4F]"}`} />
-      <span className="text-[9px] font-bold uppercase tracking-[0.45em]">
-        {children}
-      </span>
-    </div>
-  );
-}
+    <main className="bg-[#F8F6F1] text-[#1F2937] overflow-hidden">
+      {/* HERO SECTION */}
 
-/* ─── Parallax Image Wrapper ─────────────────────── */
-function ParallaxImage({ src, alt, className }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
-  return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.img
-        src={src}
-        alt={alt}
-        style={{ y }}
-        className="w-full h-full object-cover scale-110"
-      />
-    </div>
-  );
-}
+      <section className="relative min-h-screen flex items-center pt-24">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2400&auto=format&fit=crop"
+            alt=""
+            className="w-full h-full object-cover"
+          />
 
-/* ─── Stat Chip ──────────────────────────────────── */
-function StatChip({ value, label }) {
-  return (
-    <div className="flex flex-col gap-1">
-      <span
-        style={{ fontFamily: "'Cormorant Garamond', serif" }}
-        className="text-4xl md:text-5xl font-bold text-[#1B3A2D] leading-none"
-      >
-        {value}
-      </span>
-      <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#2D6A4F]/60">
-        {label}
-      </span>
-    </div>
-  );
-}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#052E26]/95 via-[#052E26]/80 to-[#052E26]/40" />
+        </div>
 
-export default function SeniorCarePage() {
-  const heroRef = useRef(null);
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
-  const heroTextY = useTransform(heroScroll, [0, 1], ["0%", "12%"]);
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <p className="uppercase tracking-[0.4em] text-sm text-emerald-300 mb-6">
+                AgroZen Care PLC
+              </p>
 
-  return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap');
-
-        /* Grain overlay */
-        .az-grain::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-          pointer-events: none;
-          z-index: 2;
-          border-radius: inherit;
-        }
-
-        /* Glassmorphism card */
-        .glass-card {
-          background: rgba(255,255,255,0.55);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255,255,255,0.7);
-        }
-
-        .glass-dark {
-          background: rgba(15,31,22,0.65);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
-          border: 1px solid rgba(82,183,136,0.15);
-        }
-
-        .linen { background-color: #F4F1EC; }
-        .parchment { background-color: #E8E3DA; }
-
-        /* Hover underline */
-        .fancy-link::after {
-          content: '';
-          display: block;
-          height: 1px;
-          background: #2D6A4F;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.4s ease;
-        }
-        .fancy-link:hover::after { transform: scaleX(1); }
-
-        /* Decorative SVG divider */
-        .wave-divider { display: block; width: 100%; overflow: hidden; line-height: 0; }
-      `}</style>
-
-      <main
-        style={{ fontFamily: "'Jost', sans-serif" }}
-        className="min-h-screen bg-[#F4F1EC] text-[#1B3A2D] selection:bg-emerald-200"
-      >
-        {/* ══════════════════════════════════════════════
-            §1  HERO — EDITORIAL FULL BLEED
-        ══════════════════════════════════════════════ */}
-        <section
-          ref={heroRef}
-          className="relative h-screen min-h-[700px] flex items-end overflow-hidden"
-        >
-          {/* Parallax BG */}
-          <motion.div
-            style={{ y: heroImgY }}
-            className="absolute inset-0 scale-110"
-          >
-            <img
-              src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=1920"
-              alt="Elderly Care Hero"
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient veil — heavier bottom */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1F16]/95 via-[#0F1F16]/40 to-[#0F1F16]/10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1F16]/50 to-transparent" />
-          </motion.div>
-
-          {/* Grain */}
-          <div className="absolute inset-0 az-grain pointer-events-none z-10" />
-
-          {/* Content */}
-          <motion.div
-            style={{ y: heroTextY }}
-            className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-14 pb-20 md:pb-28 grid md:grid-cols-2 gap-12 items-end"
-          >
-            {/* Left: Headline */}
-            <div className="space-y-7">
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                custom={0}
-              >
-                <Eyebrow light>Zenith Care · Dignity in Living</Eyebrow>
-              </motion.div>
-
-              <motion.h1
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                custom={1}
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                className="text-6xl md:text-8xl lg:text-[7rem] font-bold text-white leading-[0.92] tracking-tight"
-              >
+              <h1 className="text-6xl md:text-8xl leading-[0.95] text-white font-serif">
                 Redefining
-                <br />
-                <em className="italic font-light text-[#52B788]">
-                  Senior Life.
-                </em>
-              </motion.h1>
+                <span className="block italic text-emerald-300 mt-3">
+                  Senior Living
+                </span>
+              </h1>
 
-              <motion.p
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                custom={2}
-                className="max-w-sm text-[#E8E3DA]/70 text-sm font-light leading-relaxed"
-              >
-                AgroZen's healthcare wing unites precision medicine with a
-                soulful philosophy — where every elder finds not just care, but
-                a reason to thrive.
-              </motion.p>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                custom={3}
-                className="flex items-center gap-5"
-              >
-                <button className="group flex items-center gap-3 px-7 py-4 bg-[#52B788] hover:bg-[#2D6A4F] rounded-full text-white text-[10px] font-bold uppercase tracking-[0.35em] transition-all duration-500">
-                  Schedule a Visit
-                  <RiArrowRightUpLine
-                    size={14}
-                    className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                  />
-                </button>
-                <button className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 hover:text-white fancy-link transition-colors duration-300">
-                  Our Services
-                </button>
-              </motion.div>
-            </div>
-
-            {/* Right: Floating stat glass cards */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              custom={2}
-              className="hidden md:flex flex-col gap-4 items-end"
-            >
-              <div className="glass-dark rounded-3xl px-8 py-6 space-y-1">
-                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">
-                  Residents Served
-                </p>
-                <p
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  className="text-5xl font-bold text-white"
-                >
-                  500+
-                </p>
-              </div>
-              <div className="glass-dark rounded-3xl px-8 py-6 space-y-1">
-                <p className="text-[9px] text-[#52B788] font-bold uppercase tracking-[0.4em]">
-                  Care Staff
-                </p>
-                <p
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  className="text-5xl font-bold text-white"
-                >
-                  120
-                </p>
-              </div>
-              <div className="glass-dark rounded-3xl px-8 py-5 flex items-center gap-4">
-                <RiHeartPulseLine size={22} className="text-[#52B788]" />
-                <div>
-                  <p className="text-[9px] text-white/50 font-bold uppercase tracking-[0.3em]">
-                    Monitoring
-                  </p>
-                  <p className="text-sm font-semibold text-white">
-                    24 / 7 Live
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.8,
-                ease: "easeInOut",
-              }}
-              className="w-px h-10 bg-gradient-to-b from-[#52B788] to-transparent"
-            />
-            <span className="text-[8px] uppercase tracking-[0.4em] text-white/30">
-              Scroll
-            </span>
-          </motion.div>
-        </section>
-
-        {/* ══════════════════════════════════════════════
-            §2  CLINICAL INFRASTRUCTURE — SPLIT LAYOUT
-        ══════════════════════════════════════════════ */}
-        <section className="py-32 md:py-44 px-6 md:px-14 overflow-hidden linen">
-          <div className="max-w-7xl mx-auto">
-            {/* Section header */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="mb-20 md:mb-28 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
-            >
-              <div className="space-y-4">
-                <Eyebrow>Medical Excellence</Eyebrow>
-                <h2
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  className="text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight max-w-2xl"
-                >
-                  Advanced Clinical
-                  <br />
-                  <em className="font-light italic text-[#2D6A4F]">
-                    Infrastructure.
-                  </em>
-                </h2>
-              </div>
-              {/* Stats row */}
-              <div className="flex gap-10 md:gap-14">
-                <StatChip value="99.9%" label="Diagnostic accuracy" />
-                <div className="w-px h-14 bg-[#1B3A2D]/10 self-center" />
-                <StatChip value="< 3min" label="Emergency response" />
-              </div>
-            </motion.div>
-
-            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-              {/* Left: Feature cards */}
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: RiStethoscopeLine,
-                    title: "Specialized Geriatrics",
-                    desc: "Dedicated teams focused on age-specific conditions — from mobility therapy to cognitive support — tailoring care to each individual's rhythm of life.",
-                    tag: "Clinical",
-                  },
-                  {
-                    icon: RiWifiLine,
-                    title: "24/7 Smart Monitoring",
-                    desc: "IoT-enabled vitals tracking delivers instant alerts to on-call physicians, ensuring every health event is met with immediate, informed response.",
-                    tag: "Technology",
-                  },
-                  {
-                    icon: RiShieldCrossLine,
-                    title: "Zenith Care Management",
-                    desc: "Our proprietary hospital system centralizes patient records, medication schedules, and diagnostic histories into one seamless interface.",
-                    tag: "Precision",
-                  },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeLeft}
-                    whileHover={{ x: 6 }}
-                    transition={{ duration: 0.3 }}
-                    className="group flex gap-6 p-6 rounded-3xl border border-[#1B3A2D]/8 hover:border-[#2D6A4F]/25 hover:bg-white/70 transition-all duration-500 cursor-default"
-                  >
-                    {/* Icon */}
-                    <div className="shrink-0 w-14 h-14 rounded-2xl bg-[#1B3A2D]/5 group-hover:bg-[#2D6A4F] flex items-center justify-center text-[#2D6A4F] group-hover:text-white transition-all duration-500 shadow-sm">
-                      <item.icon size={22} />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                        <h4
-                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                          className="text-xl font-bold tracking-tight"
-                        >
-                          {item.title}
-                        </h4>
-                        <span className="px-2 py-0.5 rounded-full bg-[#2D6A4F]/8 text-[#2D6A4F] text-[8px] font-bold uppercase tracking-widest">
-                          {item.tag}
-                        </span>
-                      </div>
-                      <p className="text-sm text-[#1B3A2D]/55 leading-relaxed font-light">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Right: Asymmetric image composition */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={scaleIn}
-                className="relative"
-              >
-                {/* Main image */}
-                <div className="relative aspect-[3/4] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_-20px_rgba(27,58,45,0.25)]">
-                  <ParallaxImage
-                    src="https://images.pexels.com/photos/7088483/pexels-photo-7088483.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Clinical Technology"
-                    className="absolute inset-0 h-full w-full"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1F16]/40 to-transparent" />
-                </div>
-
-                {/* Floating glass badge — bottom right */}
-                <motion.div
-                  initial={{ opacity: 0, y: 24, x: 24 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="glass-card absolute -bottom-6 -right-4 md:-right-10 rounded-3xl p-6 shadow-xl max-w-[200px]"
-                >
-                  <RiHeartPulseLine size={22} className="text-[#2D6A4F] mb-3" />
-                  <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#2D6A4F] mb-0.5">
-                    Precision
-                  </p>
-                  <p
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-2xl font-bold text-[#1B3A2D]"
-                  >
-                    99.9%
-                    <br />
-                    <span className="text-base font-light">Accuracy</span>
-                  </p>
-                </motion.div>
-
-                {/* Floating badge — top left */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20, x: -20 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.7, duration: 0.8 }}
-                  className="glass-card absolute -top-5 -left-4 md:-left-8 rounded-2xl px-5 py-4 shadow-lg"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#1B3A2D]">
-                      Live Monitoring
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* Decorative circle */}
-                <div className="absolute -z-10 -bottom-12 -left-12 w-48 h-48 rounded-full bg-[#2D6A4F]/8 blur-2xl" />
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════
-            §3  RESIDENTIAL ECOSYSTEM — LIVING WITH PURPOSE
-        ══════════════════════════════════════════════ */}
-        <section className="py-24 px-6 md:px-14 bg-[#F4F1EC]">
-          <div className="max-w-7xl mx-auto">
-            {/* Full-width quote banner */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="relative overflow-hidden rounded-[3rem] bg-[#1B3A2D] az-grain mb-20 px-10 md:px-20 py-16 md:py-20 flex flex-col md:flex-row items-center gap-10"
-            >
-              {/* Decorative blob */}
-              <div className="absolute right-0 top-0 w-80 h-80 bg-[#2D6A4F]/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-              <div className="absolute left-1/3 bottom-0 w-56 h-56 bg-[#52B788]/10 rounded-full blur-2xl pointer-events-none" />
-
-              <blockquote
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                className="relative z-10 text-4xl md:text-6xl font-light italic text-white max-w-2xl leading-tight"
-              >
-                "A place where every morning brings fresh air, fresh food, and a
-                fresh reason to live."
-              </blockquote>
-              <div className="relative z-10 shrink-0 flex flex-col gap-2">
-                <RiLeafLine size={40} className="text-[#52B788]" />
-                <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#52B788]">
-                  AgroZen Philosophy
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Split: Text + Masonry Photos */}
-            <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 items-start">
-              {/* Left: Copy */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                className="space-y-8 lg:pt-4 lg:sticky lg:top-32"
-              >
-                <Eyebrow>A Place Called Home</Eyebrow>
-                <h2
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  className="text-5xl md:text-6xl font-bold leading-[0.95] tracking-tight"
-                >
-                  Living with
-                  <br />
-                  <em className="italic font-light text-[#2D6A4F]">Purpose.</em>
-                </h2>
-                <p className="text-[#1B3A2D]/60 text-sm font-light leading-relaxed max-w-sm">
-                  Our residential complexes sit within our own organic
-                  agricultural lands. Every day, residents wake to birdsong,
-                  fresh-harvested produce, and a community that sees them — not
-                  just their condition.
-                </p>
-                <p className="text-[#1B3A2D]/60 text-sm font-light leading-relaxed max-w-sm">
-                  Spiritual wellness gardens, cultural events, and
-                  multi-generational programmes ensure each resident writes a
-                  new chapter — not simply completes one.
-                </p>
-
-                {/* Tag chips */}
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    { icon: RiLeafLine, label: "Organic Surroundings" },
-                    { icon: RiGroupLine, label: "Community Events" },
-                    { icon: RiHomeHeartLine, label: "24/7 Pastoral Care" },
-                  ].map((t, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-[#1B3A2D]/6 hover:bg-[#2D6A4F] hover:text-white rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-400 cursor-default group"
-                    >
-                      <t.icon
-                        size={12}
-                        className="text-[#2D6A4F] group-hover:text-white transition-colors"
-                      />
-                      {t.label}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Small stat strip */}
-                <div className="flex gap-8 pt-4 border-t border-[#1B3A2D]/10">
-                  <StatChip value="4 ac" label="Green land" />
-                  <div className="w-px h-10 bg-[#1B3A2D]/10 self-center" />
-                  <StatChip value="3" label="Wellness zones" />
-                </div>
-              </motion.div>
-
-              {/* Right: Masonry photo grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  {
-                    src: "https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    h: "h-72",
-                    delay: 0,
-                  },
-                  {
-                    src: "https://images.pexels.com/photos/1722183/pexels-photo-1722183.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    h: "h-48 mt-10",
-                    delay: 0.1,
-                  },
-                  {
-                    src: "https://images.pexels.com/photos/2058130/pexels-photo-2058130.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    h: "h-48",
-                    delay: 0.15,
-                  },
-                  {
-                    src: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    h: "h-72",
-                    delay: 0.2,
-                  },
-                ].map((p, i) => (
-                  <motion.div
-                    key={i}
-                    custom={p.delay}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={scaleIn}
-                    className={`${p.h} rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-500`}
-                  >
-                    <img
-                      src={p.src}
-                      alt="Senior Living"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════
-            §4  TELEMEDICINE & ACCESS — DARK SECTION
-        ══════════════════════════════════════════════ */}
-        <section className="py-32 md:py-44 px-6 md:px-14 bg-[#0F1F16] relative overflow-hidden az-grain">
-          {/* Background orbs */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#2D6A4F]/15 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#52B788]/10 rounded-full blur-[60px] pointer-events-none" />
-
-          <div className="max-w-7xl mx-auto relative z-10">
-            {/* Header */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="mb-20 space-y-5 max-w-2xl"
-            >
-              <Eyebrow light>Digital Health Access</Eyebrow>
-              <h2
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                className="text-5xl md:text-7xl font-bold text-white leading-[0.92] tracking-tight"
-              >
-                Care Without
-                <br />
-                <em className="font-light italic text-[#52B788]">
-                  Boundaries.
-                </em>
-              </h2>
-              <p className="text-[#E8E3DA]/50 text-sm font-light leading-relaxed max-w-md">
-                The Zenith Care digital portal connects families to real-time
-                health dashboards, physician consultations, and progress reports
-                — wherever they are in the world.
+              <p className="mt-10 text-lg md:text-2xl text-white/75 max-w-2xl leading-relaxed font-light">
+                A serene residential sanctuary where healthcare, nature,
+                accessibility, and emotional well-being come together to create
+                a dignified lifestyle for every resident.
               </p>
             </motion.div>
+          </div>
+        </div>
 
-            {/* Cards */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: RiStethoscopeLine,
-                  val: "Expert Physicians",
-                  desc: "Consult with the nation's leading geriatricians, cardiologists, and neurologists — in-person or via our telehealth platform.",
-                  num: "01",
-                },
-                {
-                  icon: RiMicroscopeLine,
-                  val: "Diagnostic Labs",
-                  desc: "Fully equipped in-house laboratory delivering digital results within hours — not days — with AI-assisted analysis.",
-                  num: "02",
-                },
-                {
-                  icon: RiTimeLine,
-                  val: "Immediate Response",
-                  desc: "On-site paramedics and dedicated emergency transport ensure that every critical moment is answered in under three minutes.",
-                  num: "03",
-                },
-              ].map((box, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeUp}
-                  whileHover={{ y: -8 }}
-                  className="group relative p-8 md:p-10 rounded-3xl border border-white/8 hover:border-[#52B788]/30 bg-white/3 hover:bg-white/6 transition-all duration-500 overflow-hidden"
-                >
-                  {/* Number watermark */}
-                  <span
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="absolute top-6 right-8 text-7xl font-bold text-white/4 group-hover:text-white/7 transition-colors select-none leading-none"
-                  >
-                    {box.num}
-                  </span>
+        {/* Floating Card */}
 
-                  <box.icon size={28} className="text-[#52B788] mb-8" />
-                  <h4
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight"
-                  >
-                    {box.val}
-                  </h4>
-                  <p className="text-sm text-[#E8E3DA]/45 font-light leading-relaxed">
-                    {box.desc}
+        <motion.div
+          initial={{ opacity: 0, y: 80 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 1 }}
+          className="hidden xl:block absolute bottom-12 right-12 bg-white/10 backdrop-blur-2xl border border-white/10 p-8 rounded-[15px] w-[320px]"
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-400/20 flex items-center justify-center">
+              <Sparkles className="w-7 h-7 text-emerald-300" />
+            </div>
+
+            <div>
+              <p className="text-white text-xl font-serif">Trusted Wellness</p>
+              <p className="text-white/60 text-sm">
+                Designed for peaceful aging
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            {[
+              "24/7 Medical Oversight",
+              "Barrier-Free Architecture",
+              "Luxury Assisted Living",
+            ].map((item) => (
+              <div key={item} className="flex items-center justify-between">
+                <span className="text-white/80 text-sm">{item}</span>
+
+                <ChevronRight className="w-4 h-4 text-emerald-300" />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* SECTION NAVIGATION */}
+
+      <section className="py-16 bg-white border-b border-stone-200 sticky top-0 z-40 backdrop-blur-xl">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-wrap justify-center gap-4">
+            {sections.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveTab(i)}
+                className={`px-7 py-3 rounded-full transition-all duration-500 text-sm uppercase tracking-[0.2em] font-semibold ${
+                  activeTab === i
+                    ? "bg-[#064E3B] text-white shadow-xl"
+                    : "bg-stone-100 text-stone-500 hover:bg-stone-200"
+                }`}
+              >
+                {s.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DYNAMIC GRID SECTION */}
+
+      <section className="py-28">
+        <div className="container mx-auto px-6">
+          <div className="mb-20 max-w-3xl">
+            <p className="uppercase tracking-[0.35em] text-sm text-emerald-700 mb-5">
+              Curated Living Experience
+            </p>
+
+            <h2 className="text-5xl md:text-6xl font-serif leading-tight text-[#111827]">
+              Every Detail Crafted Around Comfort, Wellness & Dignity.
+            </h2>
+          </div>
+
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="grid md:grid-cols-2 xl:grid-cols-3 gap-8"
+          >
+            {sections[activeTab].data.map((item: any, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.5 }}
+                onClick={() =>
+                  setModalData({
+                    title: item.title,
+                    content: item.desc,
+                  })
+                }
+                className="group relative rounded-[15px] overflow-hidden cursor-pointer bg-white shadow-sm hover:shadow-2xl transition-all duration-700 border border-stone-100"
+              >
+                {item.image && (
+                  <div className="h-[260px] overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-[1800ms]"
+                    />
+                  </div>
+                )}
+
+                <div className="p-10">
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-8 group-hover:bg-[#064E3B] transition-all duration-500">
+                    <item.icon className="w-7 h-7 text-emerald-700 group-hover:text-white transition-all duration-500" />
+                  </div>
+
+                  <h3 className="text-3xl font-serif text-[#111827] mb-5">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-stone-500 leading-relaxed font-light">
+                    {item.desc}
                   </p>
 
-                  {/* Bottom border reveal on hover */}
-                  <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#52B788] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-center" />
+                  <div className="mt-8 flex items-center gap-3 text-[#064E3B] font-semibold">
+                    Explore Details
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FEATURE SHOWCASE */}
+
+      <section className="relative py-36 overflow-hidden bg-[#031C18] text-white">
+        {/* CINEMATIC BACKGROUND */}
+
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2400&auto=format&fit=crop')] bg-cover bg-center opacity-[0.08]" />
+
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-white/5" />
+
+          <motion.div
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.15, 0.25, 0.15],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute w-[700px] h-[700px] rounded-full bg-emerald-400 blur-[140px] -top-60 -left-60"
+          />
+
+          <motion.div
+            animate={{
+              scale: [1.1, 1, 1.1],
+              opacity: [0.12, 0.2, 0.12],
+            }}
+            transition={{
+              duration: 14,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute w-[500px] h-[500px] rounded-full bg-white blur-[120px] bottom-0 right-0"
+          />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-20 items-center">
+            {/* LEFT CONTENT */}
+
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl mb-8">
+                <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+
+                <p className="uppercase tracking-[0.35em] text-[11px] text-emerald-200 font-medium">
+                  Safety • Accessibility • Independence
+                </p>
+              </div>
+
+              <h2 className="text-5xl md:text-7xl font-serif leading-[0.95] tracking-tight max-w-3xl">
+                Designed For
+                <span className="block italic text-emerald-300 mt-2">
+                  Graceful Independent Living
+                </span>
+              </h2>
+
+              <p className="mt-10 text-lg md:text-xl text-white/65 leading-relaxed max-w-2xl font-light">
+                Every residence within AgroZen Care is thoughtfully crafted to
+                provide emotional comfort, physical safety, and effortless
+                mobility. From intelligent emergency systems to barrier-free
+                architecture, every detail exists to help seniors live with
+                confidence, dignity, and peace.
+              </p>
+
+              {/* FEATURE STACK */}
+
+              <div className="mt-14 space-y-5">
+                {livingData.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{
+                      delay: idx * 0.08,
+                      duration: 0.8,
+                    }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                      x: 8,
+                      borderColor: "rgba(52,211,153,0.35)",
+                    }}
+                    className="group relative overflow-hidden rounded-[15px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-7 transition-all duration-500"
+                  >
+                    {/* Hover Glow */}
+
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 bg-gradient-to-r from-emerald-400/10 to-transparent" />
+
+                    <div className="relative flex gap-5">
+                      <div className="w-16 h-16 rounded-2xl bg-emerald-400/10 border border-emerald-400/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-all duration-500">
+                        <item.icon className="w-7 h-7 text-emerald-300" />
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <h4 className="text-2xl font-serif tracking-tight">
+                            {item.title}
+                          </h4>
+
+                          <div className="h-[1px] w-10 bg-emerald-300/40" />
+                        </div>
+
+                        <p className="mt-3 text-white/60 leading-relaxed font-light text-[15px]">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* RIGHT VISUAL */}
+
+            <motion.div
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              {/* MAIN IMAGE */}
+
+              <div className="relative overflow-hidden rounded-[15px] border border-white/10">
+                <motion.img
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 1.8 }}
+                  src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2400&auto=format&fit=crop"
+                  alt="Luxury Senior Living"
+                  className="h-[780px] w-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                {/* Floating Content */}
+
+                <div className="absolute bottom-0 left-0 p-10">
+                  <div className="max-w-md">
+                    <p className="uppercase tracking-[0.35em] text-xs text-emerald-300 mb-4">
+                      Premium Assisted Living
+                    </p>
+
+                    <h3 className="text-4xl font-serif leading-tight">
+                      A Residential Environment That Prioritizes Safety Without
+                      Sacrificing Elegance.
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              {/* FLOATING GLASS CARD */}
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className="absolute -bottom-10 -left-10 md:left-[-40px] bg-white/10 border border-white/10 backdrop-blur-2xl rounded-[15px] p-8 max-w-[290px] shadow-2xl"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-[15px] bg-emerald-400/10 flex items-center justify-center">
+                    <ShieldCheck className="w-7 h-7 text-emerald-300" />
+                  </div>
+
+                  <div>
+                    <p className="text-5xl font-serif italic leading-none text-white">
+                      24/7
+                    </p>
+
+                    <p className="text-white/60 text-sm mt-2">
+                      Emergency Response & Care
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    "Medical Monitoring",
+                    "Emergency Alarm Systems",
+                    "Wheelchair Accessibility",
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-center justify-between border-b border-white/10 pb-3"
+                    >
+                      <span className="text-white/75 text-sm">{item}</span>
+
+                      <ArrowRight className="w-4 h-4 text-emerald-300" />
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* SOCIAL + DINING */}
+
+    <section className="relative py-32 bg-[#F7F5F1] overflow-hidden">
+  {/* BACKGROUND ELEMENTS */}
+
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-emerald-100 blur-[140px] opacity-70" />
+
+    <div className="absolute bottom-0 left-0 w-[420px] h-[420px] rounded-full bg-[#064E3B]/10 blur-[120px]" />
+  </div>
+
+  <div className="container mx-auto px-6 relative z-10">
+    {/* SECTION HEADER */}
+
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.9 }}
+      viewport={{ once: true }}
+      className="max-w-4xl mx-auto text-center mb-24"
+    >
+      <p className="uppercase tracking-[0.4em] text-xs text-emerald-700 mb-6">
+        Lifestyle & Everyday Wellness
+      </p>
+
+      <h2 className="text-5xl md:text-7xl font-serif leading-[0.95] tracking-tight text-[#111827]">
+        Meaningful Living Beyond
+        <span className="block italic text-emerald-700">
+          Healthcare & Safety
+        </span>
+      </h2>
+
+      <p className="mt-8 text-lg md:text-xl text-stone-500 leading-relaxed max-w-3xl mx-auto font-light">
+        AgroZen Care is thoughtfully designed to create a warm emotional
+        environment where seniors feel socially connected, mentally inspired,
+        and effortlessly supported every single day.
+      </p>
+    </motion.div>
+
+    {/* MAIN GRID */}
+
+    <div className="grid xl:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
+      {/* LEFT SIDE */}
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+        className="relative rounded-[15px] overflow-hidden bg-[#052E26] min-h-[850px]"
+      >
+        {/* IMAGE */}
+
+        <motion.img
+          whileHover={{ scale: 1.04 }}
+          transition={{ duration: 1.5 }}
+          src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2400&auto=format&fit=crop"
+          alt="Community Life"
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
+        />
+
+        {/* OVERLAY */}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#021512] via-[#021512]/70 to-[#021512]/20" />
+
+        {/* CONTENT */}
+
+        <div className="relative z-10 flex flex-col justify-between h-full p-10 md:p-14">
+          {/* TOP */}
+
+          <div className="flex items-center justify-between">
+            <div className="bg-white/10 border border-white/10 backdrop-blur-xl px-5 py-3 rounded-full">
+              <p className="uppercase tracking-[0.35em] text-[11px] text-emerald-200">
+                Community Living
+              </p>
+            </div>
+
+            <div className="hidden md:flex items-center gap-2 text-white/50 text-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+              Active Social Environment
+            </div>
+          </div>
+
+          {/* BOTTOM */}
+
+          <div>
+            <h3 className="text-5xl md:text-6xl font-serif text-white leading-[1] max-w-2xl">
+              Emotional Wellness Through
+              <span className="block italic text-emerald-300 mt-2">
+                Human Connection
+              </span>
+            </h3>
+
+            <p className="mt-8 text-white/70 text-lg leading-relaxed max-w-2xl font-light">
+              Shared experiences, engaging conversations, and meaningful social
+              moments help residents feel emotionally fulfilled, mentally
+              energized, and deeply connected to a vibrant community.
+            </p>
+
+            {/* SOCIAL CARDS */}
+
+            <div className="mt-12 grid gap-5">
+              {socialData.map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: i * 0.12,
+                    duration: 0.7,
+                  }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    y: -4,
+                    backgroundColor: 'rgba(255,255,255,0.12)',
+                  }}
+                  className="group flex items-start gap-5 rounded-[15px] border border-white/10 bg-white/[0.06] backdrop-blur-xl p-6 transition-all duration-500"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-400/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-all duration-500">
+                    <s.icon className="w-7 h-7 text-emerald-300" />
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-5">
+                      <h4 className="text-2xl font-serif text-white">
+                        {s.title}
+                      </h4>
+
+                      <ArrowRight className="w-5 h-5 text-emerald-300 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                    </div>
+
+                    <p className="mt-3 text-white/65 text-[15px] leading-relaxed font-light">
+                      {s.desc}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
-
-            {/* Inline metric strip */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/8 rounded-3xl overflow-hidden"
-            >
-              {[
-                { v: "500+", l: "Active Residents" },
-                { v: "24/7", l: "Portal Access" },
-                { v: "98%", l: "Family Satisfaction" },
-                { v: "< 3m", l: "Emergency Response" },
-              ].map((m, i) => (
-                <div
-                  key={i}
-                  className="bg-[#0F1F16] px-8 py-7 flex flex-col gap-1"
-                >
-                  <span
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-3xl md:text-4xl font-bold text-white"
-                  >
-                    {m.v}
-                  </span>
-                  <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#52B788]/60">
-                    {m.l}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
           </div>
-        </section>
+        </div>
+      </motion.div>
 
-        {/* ══════════════════════════════════════════════
-            §5  CTA — WARM & HUMAN
-        ══════════════════════════════════════════════ */}
-        <section className="py-32 px-6 md:px-14 linen">
-          <div className="max-w-7xl mx-auto">
+      {/* RIGHT SIDE */}
+
+      <div className="space-y-8">
+        {/* TOP CARD */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-[15px] bg-[#052E26] text-white p-10"
+        >
+          <div className="absolute top-0 right-0 w-[220px] h-[220px] rounded-full bg-emerald-400/20 blur-[100px]" />
+
+          <div className="relative z-10">
+            <p className="uppercase tracking-[0.35em] text-[11px] text-emerald-300 mb-5">
+              Concierge Services
+            </p>
+
+            <h3 className="text-4xl md:text-5xl font-serif leading-[1.05]">
+              Everyday Comfort Thoughtfully Managed.
+            </h3>
+
+            <p className="mt-6 text-white/70 leading-relaxed text-[15px] font-light">
+              From healthy dining experiences to personalized housekeeping,
+              every daily detail is carefully designed to provide ease, comfort,
+              and peace of mind.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* SERVICE STACK */}
+
+        <div className="grid gap-5">
+          {diningData.map((item, idx) => (
             <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={scaleIn}
-              className="relative rounded-[4rem] overflow-hidden az-grain"
-              style={{
-                background:
-                  "linear-gradient(135deg, #1B3A2D 0%, #2D6A4F 60%, #1B3A2D 100%)",
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: idx * 0.08,
+                duration: 0.7,
               }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -4,
+                borderColor: 'rgba(5,78,59,0.15)',
+              }}
+              className="group rounded-[15px] border border-stone-200 bg-white p-7 hover:shadow-xl transition-all duration-500"
             >
-              {/* Decorative elements */}
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#52B788]/10 blur-3xl" />
-                <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-[#52B788]/8 blur-2xl -translate-y-1/3 translate-x-1/4" />
-              </div>
+              <div className="flex gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-all duration-500">
+                  <item.icon className="w-7 h-7 text-emerald-700" />
+                </div>
 
-              <div className="relative z-10 px-10 md:px-24 py-20 md:py-28 grid md:grid-cols-2 gap-16 items-center">
-                {/* Left: Copy */}
-                <div className="space-y-7">
-                  <HiOutlineSparkles size={32} className="text-[#52B788]" />
-                  <h2
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    className="text-5xl md:text-6xl font-bold text-white leading-[0.95] tracking-tight"
-                  >
-                    Your Family is
-                    <br />
-                    <em className="font-light italic text-[#52B788]">
-                      Our Responsibility.
-                    </em>
-                  </h2>
-                  <p className="text-[#E8E3DA]/60 text-sm font-light leading-relaxed max-w-sm">
-                    Whether you're enquiring about residential availability,
-                    hospital services, or our nursing caregiver institute — we
-                    are here, and we are listening.
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-5">
+                    <h4 className="text-2xl font-serif text-[#111827]">
+                      {item.title}
+                    </h4>
+
+                    <ArrowRight className="w-5 h-5 text-emerald-700 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                  </div>
+
+                  <p className="mt-3 text-stone-500 text-[15px] leading-relaxed font-light">
+                    {item.desc}
                   </p>
                 </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-                {/* Right: CTA cards */}
-                <div className="space-y-4">
-                  {[
-                    {
-                      title: "Schedule a Visit",
-                      desc: "Walk through our facilities and meet the team who will care for your loved one.",
-                      primary: true,
-                    },
-                    {
-                      title: "Contact Medical Team",
-                      desc: "Speak directly with our chief of geriatrics or nursing director.",
-                      primary: false,
-                    },
-                    {
-                      title: "Enrol in Nursing Institute",
-                      desc: "Join our internationally certified caregiver training programme.",
-                      primary: false,
-                    },
-                  ].map((cta, i) => (
-                    <motion.button
-                      key={i}
-                      custom={i}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      variants={fadeUp}
-                      whileHover={{ x: 6 }}
-                      className={`w-full text-left flex items-center justify-between gap-4 px-7 py-5 rounded-2xl transition-all duration-400 ${
-                        cta.primary
-                          ? "bg-[#52B788] hover:bg-white text-white hover:text-[#1B3A2D]"
-                          : "border border-white/12 hover:border-[#52B788]/50 hover:bg-white/5 text-white"
-                      }`}
-                    >
-                      <div>
-                        <p
-                          className={`text-sm font-semibold mb-0.5 ${cta.primary ? "" : "text-white"}`}
-                        >
-                          {cta.title}
-                        </p>
-                        <p
-                          className={`text-[10px] font-light ${cta.primary ? "text-white/70 hover:text-[#1B3A2D]/60" : "text-white/40"}`}
-                        >
-                          {cta.desc}
-                        </p>
-                      </div>
-                      <RiArrowRightUpLine
-                        size={18}
-                        className="shrink-0 opacity-60"
-                      />
-                    </motion.button>
-                  ))}
+        {/* BOTTOM FEATURE CARD */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.8,
+          }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden rounded-[15px] bg-[#E9F7F1] border border-emerald-100 p-10"
+        >
+          <div className="absolute bottom-0 right-0 w-[240px] h-[240px] rounded-full bg-emerald-200 blur-[100px]" />
+
+          <div className="relative z-10 flex items-start justify-between gap-6">
+            <div>
+              <p className="uppercase tracking-[0.35em] text-[11px] text-emerald-700 mb-5">
+                Personalized Lifestyle Support
+              </p>
+
+              <h4 className="text-4xl font-serif text-[#052E26] leading-[1.1]">
+                Hospitality-Level Living Designed For Seniors.
+              </h4>
+
+              <p className="mt-5 text-[#064E3B]/70 leading-relaxed max-w-md font-light">
+                Residents enjoy premium lifestyle support services that create
+                a calm, secure, and stress-free daily experience.
+              </p>
+            </div>
+
+            <div className="hidden md:flex w-16 h-16 rounded-2xl bg-white items-center justify-center shadow-lg shrink-0">
+              <Sparkles className="w-7 h-7 text-emerald-700" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      {/* CTA */}
+
+      <section className="relative py-36 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=2200&auto=format&fit=crop"
+            className="w-full h-full object-cover"
+            alt=""
+          />
+
+          <div className="absolute inset-0 bg-[#052E26]/80" />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="uppercase tracking-[0.35em] text-sm text-emerald-300 mb-6">
+              Begin A Peaceful New Chapter
+            </p>
+
+            <h2 className="text-5xl md:text-7xl text-white font-serif leading-tight">
+              Experience Senior Living Designed With Grace, Safety & Warmth.
+            </h2>
+
+            <p className="mt-10 text-white/70 text-xl leading-relaxed max-w-2xl mx-auto">
+              Schedule a personalized campus tour and discover how AgroZen Care
+              PLC creates an environment where seniors can live independently,
+              comfortably, and joyfully.
+            </p>
+
+            <div className="mt-14 flex flex-wrap justify-center gap-6">
+              <a
+                href="tel:+88012345678"
+                className="bg-emerald-500 hover:bg-emerald-400 transition-all duration-500 text-white px-10 py-5 rounded-full font-semibold shadow-2xl flex items-center gap-3"
+              >
+                <Phone className="w-5 h-5" />
+                +880 17XX XXXXXX
+              </a>
+
+              <button className="bg-white/10 border border-white/10 backdrop-blur-xl hover:bg-white/20 transition-all duration-500 text-white px-10 py-5 rounded-full font-semibold">
+                Contact Care Consultant
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MODAL */}
+
+      <AnimatePresence>
+        {modalData && (
+          <div
+            className="fixed inset-0 z-[999] bg-black/70 backdrop-blur-xl flex items-center justify-center p-6"
+            onClick={() => setModalData(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 60, scale: 0.95 }}
+              transition={{ duration: 0.5 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white max-w-2xl w-full rounded-[15px] overflow-hidden shadow-2xl"
+            >
+              <div className="relative h-[260px]">
+                <img
+                  src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=2000&auto=format&fit=crop"
+                  className="w-full h-full object-cover"
+                  alt=""
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+
+                <button
+                  onClick={() => setModalData(null)}
+                  className="absolute top-6 right-6 bg-white/10 backdrop-blur-md p-3 rounded-full border border-white/10"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+
+                <div className="absolute bottom-8 left-8">
+                  <h3 className="text-4xl font-serif text-white">
+                    {modalData.title}
+                  </h3>
                 </div>
+              </div>
+
+              <div className="p-10">
+                <p className="text-lg text-stone-600 leading-relaxed font-light">
+                  {modalData.content}
+                </p>
+
+                <button
+                  onClick={() => setModalData(null)}
+                  className="mt-10 bg-[#064E3B] hover:bg-[#05392c] transition-all duration-500 text-white px-8 py-4 rounded-full font-semibold"
+                >
+                  Close Details
+                </button>
               </div>
             </motion.div>
           </div>
-        </section>
-      </main>
-    </>
+        )}
+      </AnimatePresence>
+    </main>
   );
-}
+};
+
+export default AgroZenCarePage;

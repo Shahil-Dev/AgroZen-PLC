@@ -1,177 +1,186 @@
 "use client";
-
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { HeartPulse, Users, Wind, ShieldCheck, Sun } from "lucide-react";
+  HeartPulse,
+  Home,
+  Users,
+  ConciergeBell,
+  ArrowRight,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 
-const CinematicText = ({
-  text,
-  delay = 0,
-}: {
-  text: string;
-  delay?: number;
-}) => (
-  <span className="inline-block overflow-hidden">
-    <motion.span
-      initial={{ y: "100%" }}
-      whileInView={{ y: "0%" }}
-      viewport={{ once: true }}
-      transition={{ duration: 1.1, ease: [0.215, 0.61, 0.355, 1], delay }}
-      className="block"
-    >
-      {text}
-    </motion.span>
-  </span>
-);
+const categories = [
+  {
+    id: 0,
+    title: "Health",
+    icon: HeartPulse,
+    data: [
+      "Regular Check-ups",
+      "24/7 Medical Response",
+      "Medicine Delivery",
+      "Physiotherapy",
+    ],
+  },
+  {
+    id: 1,
+    title: "Living",
+    icon: Home,
+    data: [
+      "Barrier-Free Design",
+      "Backup Power",
+      "Luxury Suites",
+      "Safety Alarms",
+    ],
+  },
+  {
+    id: 2,
+    title: "Social",
+    icon: Users,
+    data: [
+      "Cinema Lounge",
+      "Reading Library",
+      "Indoor Games",
+      "Community Events",
+    ],
+  },
+  {
+    id: 3,
+    title: "Service",
+    icon: ConciergeBell,
+    data: ["Farm-to-Table Dining", "Housekeeping", "Laundry Care", "Mini-Mart"],
+  },
+];
 
-export default function SeniorLivingSanctuary() {
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const sectionRef = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef });
-
-  const imageScale = useTransform(scrollYProgress, [0, 0.6], [1, 1.12]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.25, 0.6]);
+export default function CompactAgroZen() {
+  const [active, setActive] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative py-20 md:py-32 px-5 md:px-6 bg-[#F8F6F2] overflow-hidden"
-    >
-      <div className="6xl mx-auto">
-        {/* Main Grid - Responsive Split */}
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          {/* LEFT: STORY & EMOTION */}
-          <div className="lg:col-span-5 space-y-8 md:space-y-10">
-            <h2 className="text-5xl md:text-6xl lg:text-[5.2rem] leading-[0.92] font-light tracking-tighter text-[#1F2A24]">
-              A place where
-              <br />
-              <span className="font-serif italic text-emerald-700">
-                <CinematicText text="wisdom ages gracefully" delay={0.15} />
-              </span>
-            </h2>
+    <div className="min-h-screen bg-[#F8F6F1] font-sans text-slate-900 overflow-x-hidden">
+      {/* HERO SECTION */}
+      <section className="relative h-[80vh] flex items-center justify-center bg-[#052E26] text-white text-center px-4">
+        <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80')] bg-cover bg-center" />
 
-            <p className="text-xl md:text-2xl text-[#44554A] font-light leading-tight max-w-lg">
-              Golden years should feel like the richest chapter of life. Here,
-              every sunrise brings gentle joy, meaningful connection, and deep
-              peace.
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-10 max-w-3xl"
+        >
+          <h1 className="text-5xl md:text-7xl font-serif mb-6">
+            AgroZen <span className="italic text-emerald-400">Care</span>
+          </h1>
+          <p className="text-lg md:text-xl font-light mb-10 opacity-80">
+            Redefining Senior Living with Dignity, Nature & Grace.
+          </p>
 
-            {/* Philosophy Toggle */}
-            <div className="pt-4">
-              <motion.div
-                onClick={() =>
-                  setExpanded(expanded === "philosophy" ? null : "philosophy")
-                }
-                className="group flex items-center gap-4 cursor-pointer w-fit"
-              >
-                <div className="text-sm uppercase tracking-widest font-medium text-emerald-700 group-hover:tracking-[4px] transition-all duration-300">
-                  Our Philosophy
-                </div>
-                <div
-                  className={`w-9 h-px bg-emerald-700 transition-all duration-300 ${expanded === "philosophy" ? "rotate-45 w-9" : "group-hover:w-12"}`}
-                />
-              </motion.div>
+          <div className="flex flex-wrap justify-center gap-4"></div>
+        </motion.div>
+      </section>
 
-              <AnimatePresence>
-                {expanded === "philosophy" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mt-6 text-[#44554A] text-[17px] leading-relaxed border-l-2 border-emerald-200 pl-6"
-                  >
-                    Aging is not decline — it is continuation. We honor life
-                    experience while nurturing vitality through nature,
-                    community, and compassionate care.
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Explore Link */}
-              <div className="mt-8">
-                <Link
-                  href="/care"
-                  className="group flex items-center gap-4 w-fit"
-                >
-                  <div className="text-sm uppercase tracking-widest font-medium text-emerald-700 group-hover:tracking-[4px] transition-all duration-300">
-                    Explore the Sanctuary
-                  </div>
-                  <div className="w-9 h-px bg-emerald-700 group-hover:w-12 transition-all duration-300" />
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: CINEMATIC IMAGE */}
-          <div className="lg:col-span-7 relative">
-            <div className="relative aspect-[4/3] sm:aspect-[16/13] lg:aspect-[16/12] rounded-3xl md:rounded-[3.5rem] overflow-hidden shadow-2xl border border-[#EDE8E0]">
-              <motion.img
-                style={{ scale: imageScale }}
-                src="https://images.pexels.com/photos/3768114/pexels-photo-3768114.jpeg?auto=compress&cs=tinysrgb&w=1920"
-                alt="Elderly couple enjoying peaceful morning in garden"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-
-              {/* Soft Black Gradient Overlay */}
-              <div
-                className="absolute inset-0 bg-gradient-to-b 
-                    from-black/20 via-black/40 to-black/70 
-                    md:from-black/10 md:via-black/35 md:to-black/65"
-              />
-
-              {/* Optional subtle vignette for extra depth */}
-              <div
-                className="absolute inset-0 bg-gradient-to-r 
-                    from-black/10 via-transparent to-black/10"
-              />
-
-              {/* Floating serene elements */}
-              <div className="hidden md:flex absolute inset-0 items-center justify-center">
-                <div className="relative w-72 h-72 lg:w-80 lg:h-80">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 50,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-0 border border-white/30 rounded-full"
-                  />
-                  <motion.div
-                    animate={{ rotate: -360 }}
-                    transition={{
-                      duration: 65,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-10 border border-white/20 rounded-full"
-                  />
-                </div>
-              </div>
-
-              {/* Morning Ritual Caption */}
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-white z-10">
-                <div className="flex items-center gap-3 mb-3">
-                  <Sun className="text-amber-300" size={26} />
-                  <span className="uppercase text-xs tracking-widest opacity-75">
-                    Morning in the Sanctuary
-                  </span>
-                </div>
-                <p className="text-xl md:text-3xl font-light leading-tight max-w-md">
-                  Gentle yoga under the trees. Warm herbal tea from our garden.
-                  A new day embraced with gratitude.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* DYNAMIC CONTENT SECTION */}
+      <section className="py-20 container mx-auto md:px-4">
+        <div className="flex overflow-x-auto gap-3 mb-12 pb-2 no-scrollbar justify-center md:justify-start">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all whitespace-nowrap tracking-widest uppercase ${
+                active === cat.id
+                  ? "bg-emerald-800 text-white shadow-xl scale-105"
+                  : "bg-white text-slate-500 hover:bg-emerald-50"
+              }`}
+            >
+              {cat.title}
+            </button>
+          ))}
         </div>
-      </div>
-    </section>
+
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {categories[active].data.map((item, idx) => (
+            <div
+              key={idx}
+              onClick={() => setSelected(item)}
+              className="p-8 bg-white rounded-[2rem] border border-emerald-50 shadow-sm hover:shadow-xl cursor-pointer transition-all group relative overflow-hidden text-left"
+            >
+              <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-800 group-hover:text-white transition-colors">
+                {React.createElement(categories[active].icon, { size: 22 })}
+              </div>
+              <h3 className="text-xl font-serif mb-3 text-slate-800">{item}</h3>
+              <p className="text-sm text-slate-500 mb-6 font-light leading-relaxed">
+                Tailored {item.toLowerCase()} services for a peaceful life.
+              </p>
+              <div className="flex items-center text-emerald-700 text-xs font-bold gap-2">
+                LEARN MORE{" "}
+                <ArrowRight
+                  size={14}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="mt-16 text-center"
+        >
+          <Link href="/care">
+            <button className="inline-flex items-center gap-2 text-emerald-800 font-serif text-lg hover:gap-4 transition-all group relative">
+              Explore All Features <ArrowRight className="text-emerald-500" />
+            </button>
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* DETAILS MODAL */}
+      <AnimatePresence>
+        {selected && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSelected(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-white p-8 md:p-10 rounded-[2.5rem] max-w-sm w-full relative shadow-2xl text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelected(null)}
+                className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+              <div className="w-16 h-16 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                {React.createElement(categories[active].icon, { size: 30 })}
+              </div>
+              <h4 className="text-2xl font-serif mb-4 text-slate-900">
+                {selected}
+              </h4>
+              <p className="text-slate-500 font-light leading-relaxed mb-8">
+                Our {selected.toLowerCase()} program is designed with the
+                highest standards of safety and comfort for all residents.
+              </p>
+              <button
+                onClick={() => setSelected(null)}
+                className="w-full py-4 bg-emerald-950 text-white rounded-2xl font-bold hover:bg-emerald-900 transition-colors"
+              >
+                Close
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

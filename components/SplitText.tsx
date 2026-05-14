@@ -1,26 +1,35 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-export const SplitText = ({ text, className }: { text: string; className?: string }) => {
+interface SplitTextProps {
+  text: string;
+  className?: string;
+}
+
+export const SplitText = ({ text, className }: SplitTextProps) => {
   const words = text.split(" ");
   
-  const container = {
+  // Container Variants with Explicit Type
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    visible: (i: number = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+      transition: { 
+        staggerChildren: 0.12, 
+        delayChildren: 0.04 * i 
+      },
     }),
   };
 
-  const child = {
+  const child: Variants = {
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring", 
         damping: 12,
         stiffness: 100,
-        ease: [0.22, 1, 0.36, 1]
+       
       },
     },
     hidden: {
@@ -39,8 +48,12 @@ export const SplitText = ({ text, className }: { text: string; className?: strin
       className={className}
     >
       {words.map((word, index) => (
-        <motion.span variants={child} key={index} className="mr-3">
-          {word}
+        <motion.span 
+          variants={child} 
+          key={index} 
+          className="inline-block mr-[0.25em]" 
+        >
+          {word === "" ? "\u00A0" : word}
         </motion.span>
       ))}
     </motion.h1>

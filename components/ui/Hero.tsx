@@ -21,8 +21,7 @@ const slides = [
   {
     id: 1,
     type: "brand",
-
-    image: "/image/high png agro.png", 
+    image: "/image/high png agro.png",
     tagline: "AgroZen Care PLC",
     accent: "Nature • Innovation • Care",
   },
@@ -87,9 +86,11 @@ const MouseTrackingGradient = () => {
 
 export default function AgroZenHero() {
   const [current, setCurrent] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    
     intervalRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 5000);
@@ -97,13 +98,17 @@ export default function AgroZenHero() {
 
   useEffect(() => {
     startTimer();
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, []);
 
   const currentSlide = slides[current];
 
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden ">
+    <section className="relative h-[100dvh] w-full overflow-hidden">
       <div className="relative h-full w-full lg:h-[94vh] lg:w-[98%] lg:mx-auto lg:mt-[3vh] lg:rounded-[10px] overflow-hidden">
         
         {/* Background Layer */}
@@ -126,6 +131,7 @@ export default function AgroZenHero() {
                   transition={{ duration: 6 }}
                   src={currentSlide.image}
                   className="h-full w-full object-cover brightness-[0.4]"
+                  alt=""
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
               </div>
@@ -145,7 +151,6 @@ export default function AgroZenHero() {
               className="w-full px-6 md:px-12 lg:px-24"
             >
               {currentSlide.type === "brand" ? (
-                /* --- FIRST SLIDER: CENTERED LOGO IMAGE --- */
                 <div className="flex flex-col items-center justify-center text-center">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -156,26 +161,12 @@ export default function AgroZenHero() {
                     <img 
                       src={currentSlide.image} 
                       alt="AgroZen Logo" 
-                      className="w-full h-auto  lg:mt-14 drop-shadow-[0_20px_50px_rgba(16,185,129,0.2)]"
+                      className="w-full h-auto lg:mt-14 drop-shadow-[0_20px_50px_rgba(16,185,129,0.2)]"
                     />
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="mt-12"
-                  >
-                  
                   </motion.div>
                 </div>
               ) : (
-                /* --- OTHER SLIDERS: CONTENT --- */
                 <div className="max-w-5xl">
-                  <motion.div className="flex items-center gap-3 text-emerald-400 mb-6 uppercase tracking-[0.3em] text-[10px] font-bold">
-                  
-                   
-                  </motion.div>
                   <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-8">
                     {currentSlide.title} <br />
                     <span className="italic font-light text-emerald-400">{currentSlide.highlight}</span>

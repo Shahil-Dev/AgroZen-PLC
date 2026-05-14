@@ -1,213 +1,152 @@
 "use client";
-import React from "react";
-import { motion, Variants } from "framer-motion";
-import {
-  Compass,
-  Trees,
-  Sun,
-  Coffee,
-  ArrowRight,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
-import Link from "next/link";
 
-// ===== Type Definitions =====
-interface RouteStep {
-  icon: React.ElementType;
-  title: string;
-  desc: string;
-  highlight: string;
-}
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-// ===== Cinematic Text Reveal =====
-const CinematicReveal: React.FC<{
-  children: React.ReactNode;
-  delay?: number;
-}> = ({ children, delay = 0 }) => (
-  <span className="inline-block overflow-hidden">
-    <motion.span
-      initial={{ y: "110%", skewY: 4 }}
-      whileInView={{ y: 0, skewY: 0 }}
-      viewport={{ once: true, margin: "-5%" }}
-      transition={{
-        duration: 1,
-        ease: [0.16, 1, 0.3, 1],
-        delay,
-      }}
-      className="block"
-    >
-      {children}
-    </motion.span>
-  </span>
-);
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+const carouselImages = [
+  {
+    url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+    title: "Lush Orchards"
   },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  {
+    url: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=800&q=80",
+    title: "Vegetable Fields"
   },
-};
+  {
+    url: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=800&q=80",
+    title: "Dairy Farm"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1594495894542-a46cc73e081a?auto=format&fit=crop&w=800&q=80",
+    title: "Shaded Parks"
+  }
+];
 
-export default function AgroTourismRouteSummary() {
-  const routeSteps: RouteStep[] = [
-    {
-      icon: Trees,
-      title: "The Living Sanctuary",
-      desc: "Begin in our carbon-negative forest reserves, where ancient trees whisper stories of regeneration and the air carries the scent of wild herbs.",
-      highlight: "Forest Bathing",
-    },
-    {
-      icon: Sun,
-      title: "Solar Harvest Fields",
-      desc: "Walk golden pathways through precision farmlands at dawn. Witness technology and tradition merging under the first light of day.",
-      highlight: "Sunrise Harvest",
-    },
-    {
-      icon: Coffee,
-      title: "Organic Retreat",
-      desc: "Culminate in farm-to-table experiences. Taste ingredients harvested steps from your table, prepared by chefs who know each plant by name.",
-      highlight: "Seed-to-Plate",
-    },
-  ];
+export default function AgroTourismSummary() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="relative w-full py-20 md:py-28 px-6 md:px-12 bg-[#FCFAF7] overflow-hidden font-sans">
-      {/* Subtle Background Texture */}
-      <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[radial-gradient(circle_at_50%_50%,_#0a5c3a_1px,_transparent_1px)] [background-size:40px_40px]" />
+    <section id="agro-summary" className="bg-white py-32 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          
+          {/* --- Left Content: The Summary --- */}
+          <div className="lg:col-span-7">
+           
+            
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-5xl md:text-7xl font-light tracking-tighter leading-tight text-stone-900 mb-10"
+            >
+              Agro-Tourism <br />
+              <span className="italic font-serif text-emerald-900">Redefined</span>
+            </motion.h2>
 
-      {/* Ambient Glow */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-emerald-400/5 blur-[150px] rounded-full" />
-      <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-amber-300/5 blur-[120px] rounded-full" />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid lg:grid-cols-12 gap-12 md:gap-16 lg:gap-20 items-center"
-        >
-          {/* LEFT: Narrative Content */}
-          <div className="lg:col-span-6 space-y-8 md:space-y-10">
-            <motion.div variants={itemVariants} className="space-y-5">
-              <div className="flex items-center gap-3">
-                <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
-                <span className="text-emerald-700 font-medium uppercase tracking-[0.35em] text-[10px] md:text-xs">
-                  The AgroZen Route
-                </span>
+            <div className="space-y-8 max-w-2xl">
+              <div>
+                <h3 className="text-xl font-bold text-stone-800 mb-3 uppercase tracking-wide">Nature’s Convergence</h3>
+                <p className="text-stone-500 font-light leading-relaxed text-lg">
+                  AgroZen Care PLC brings a harmonious blend of sustainable farming and luxury leisure. 
+                  Our agro-tourism route is designed to immerse visitors in the rhythmic cycles of 
+                  tropical agriculture, from heritage mango groves to precision vegetable plots.
+                </p>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-stone-800 tracking-tight leading-[0.9]">
-                <CinematicReveal>A Journey of</CinematicReveal>
-                <br />
-                <span className="italic font-serif text-emerald-600">
-                  <CinematicReveal delay={0.15}>Reconnection</CinematicReveal>
-                </span>
-              </h2>
+              <div>
+                <h3 className="text-xl font-bold text-stone-800 mb-3 uppercase tracking-wide">Ethical Immersion</h3>
+                <p className="text-stone-500 font-light leading-relaxed text-lg">
+                  Beyond just sight-seeing, we offer a hands-on journey. Explore our dairy systems, 
+                  engage with local farming wisdom in our training hubs, and find serenity in 
+                  our curated shaded parks. This is where the soil meets the soul.
+                </p>
+              </div>
 
-              <p className="text-stone-500 text-base md:text-lg font-light leading-relaxed max-w-lg">
-                Not a tour—a pilgrimage through landscapes that heal. Three
-                curated chapters guiding you from ancient forests through sunlit
-                fields to a table set by nature itself.
-              </p>
-            </motion.div>
-
-            {/* Route Steps Timeline */}
-            <motion.div
-              variants={itemVariants}
-              className="space-y-6 md:space-y-8"
-            >
-              {routeSteps.map((step, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ x: 8 }}
-                  className="flex gap-4 md:gap-5 group cursor-pointer"
-                >
-                  {/* Timeline Connector */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-white border border-stone-200 flex items-center justify-center shadow-sm group-hover:border-emerald-400 group-hover:bg-emerald-50 transition-all duration-300">
-                      <step.icon
-                        size={20}
-                        className="text-stone-400 group-hover:text-emerald-600 transition-colors"
-                      />
-                    </div>
-                    {idx !== routeSteps.length - 1 && (
-                      <div className="w-px h-10 md:h-14 bg-gradient-to-b from-stone-300 to-transparent mt-1" />
-                    )}
-                  </div>
-
-                  {/* Step Content */}
-                  <div className="pt-1 md:pt-2 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-stone-800 font-medium text-base md:text-lg leading-snug">
-                        {step.title}
-                      </h3>
-                      <span className="hidden sm:inline-block px-2 py-0.5 bg-emerald-50 border border-emerald-200 rounded-full text-[10px] text-emerald-700 font-medium">
-                        {step.highlight}
-                      </span>
-                    </div>
-                    <p className="text-stone-400 text-sm md:text-base font-light leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* CTA */}
-            <motion.div variants={itemVariants} className="pt-4">
-              <Link href="/agro-tourism">
-                <button className="group relative inline-flex items-center gap-3 px-8 py-4 bg-emerald-600 text-white rounded-full font-medium text-sm hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 overflow-hidden">
-                  <span className="relative z-10 flex items-center gap-2">
-                    <Compass size={18} />
-                    Explore The Route
-                  </span>
-                  <ArrowRight
-                    size={16}
-                    className="relative z-10 group-hover:translate-x-1 transition-transform"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-white/10 to-emerald-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                </button>
-              </Link>
-            </motion.div>
+              <div className="pt-6 flex gap-12 border-t border-stone-100">
+                <div className="flex flex-col">
+                  <span className="text-3xl font-light text-emerald-900">50+</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-stone-400">Plant Species</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-3xl font-light text-emerald-900">100%</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-stone-400">Organic Path</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-3xl font-light text-emerald-900">12+</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-stone-400">Farm Zones</span>
+                </div>
+              </div>
+             <Link href="/agro-tourism" > <button className="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg flex items-center gap-2 group">
+              Explore Now
+             <ArrowRight className="text-white" />
+            </button></Link>
+            </div>
           </div>
 
-          {/* RIGHT: Cinematic Visual */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-6 relative"
-          >
-            <div className="relative aspect-[4/5] md:aspect-[5/6] rounded-[15px]  overflow-hidden shadow-2xl group">
-              {/* Hero Image */}
-              <img
-                src="https://images.pexels.com/photos/259280/pexels-photo-259280.jpeg?auto=compress&cs=tinysrgb&w=2000"
-                alt="AgroZen Tourism Route Landscape"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-              />
+          {/* --- Right Content: Compact Carousel --- */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative aspect-square md:aspect-[4/5] rounded-[15px] overflow-hidden shadow-2xl group">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentIndex}
+                  src={carouselImages[currentIndex].url}
+                  alt={carouselImages[currentIndex].title}
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+              
+              {/* Overlay Info */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              
+              <div className="absolute bottom-10 left-10 text-white">
+                <motion.span 
+                  key={`span-${currentIndex}`}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-[10px] uppercase tracking-[0.4em] font-bold text-emerald-400"
+                >
+                  Highlight 0{currentIndex + 1}
+                </motion.span>
+                <motion.h4 
+                  key={`h4-${currentIndex}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-3xl font-light italic serif mt-2"
+                >
+                  {carouselImages[currentIndex].title}
+                </motion.h4>
+              </div>
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-900/10 to-transparent" />
+              {/* Progress Indicators */}
+              <div className="absolute bottom-10 right-10 flex gap-2">
+                {carouselImages.map((_, index) => (
+                  <div 
+                    key={index} 
+                    className={`h-1 transition-all duration-500 rounded-full ${index === currentIndex ? 'w-8 bg-white' : 'w-2 bg-white/30'}`}
+                  />
+                ))}
+              </div>
             </div>
+            
+            {/* Background Decorative Element */}
+            <div className="absolute -top-10 -right-10 w-64 h-64 bg-emerald-50 rounded-full -z-10 animate-pulse" />
+          </div>
 
-            {/* Decorative Dot Pattern */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 grid grid-cols-3 gap-2 opacity-20">
-              {[...Array(9)].map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full bg-emerald-600" />
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
